@@ -10,6 +10,7 @@ from .base_screens import Screens, cat_profiles
 
 from scripts.cat.cats import Cat
 from scripts.game_structure.image_button import UISpriteButton, UIImageButton, UITextBoxTweaked
+from scripts.game_structure.ui_button import UIButton
 from scripts.utility import get_text_box_theme, update_sprite, scale, get_med_cats
 from scripts.game_structure import image_cache
 from scripts.game_structure.game_essentials import game, screen, screen_x, screen_y, MANAGER
@@ -515,18 +516,18 @@ class StarClanScreen(Screens):
         self.search_bar = pygame_gui.elements.UITextEntryLine(scale(pygame.Rect((845, 278), (294, 55))),
                                                               object_id="#search_entry_box", manager=MANAGER)
 
-        self.starclan_button = UIImageButton(scale(pygame.Rect((230, 270), (68, 68))), "", object_id="#starclan_button"
+        self.starclan_button = UIButton(scale(pygame.Rect((230, 270), (68, 68))), "", object_id="#starclan_button"
                                              , manager=MANAGER)
         self.starclan_button.disable()
-        self.unknown_residence_button = UIImageButton(scale(pygame.Rect((298, 270), (68, 68))), "",
+        self.unknown_residence_button = UIButton(scale(pygame.Rect((298, 270), (68, 68))), "",
                                                       object_id="#unknown_residence_button", manager=MANAGER)
-        self.dark_forest_button = UIImageButton(scale(pygame.Rect((366, 270), (68, 68))), "",
+        self.dark_forest_button = UIButton(scale(pygame.Rect((366, 270), (68, 68))), "",
                                                 object_id="#dark_forest_button"
                                                 , manager=MANAGER)
-        self.next_page_button = UIImageButton(scale(pygame.Rect((912, 1190), (68, 68))), "",
+        self.next_page_button = UIButton(scale(pygame.Rect((912, 1190), (68, 68))), "",
                                               object_id="#arrow_right_button"
                                               , manager=MANAGER)
-        self.previous_page_button = UIImageButton(scale(pygame.Rect((620, 1190), (68, 68))), "",
+        self.previous_page_button = UIButton(scale(pygame.Rect((620, 1190), (68, 68))), "",
                                                   object_id="#arrow_left_button"
                                                   , manager=MANAGER)
         self.page_number = pygame_gui.elements.UITextBox("", scale(pygame.Rect((680, 1190), (220, 60))),
@@ -541,13 +542,13 @@ class StarClanScreen(Screens):
 
         x_pos = 1152
         y_pos = 270
-        self.filter_by_closed = UIImageButton(
+        self.filter_by_closed = UIButton(
             scale(pygame.Rect((x_pos, y_pos), (196, 68))),
             "",
             object_id="#filter_by_closed_button",
             tool_tip_text="By default, cats are sorted by rank.", manager=MANAGER
         )
-        self.filter_by_open = UIImageButton(
+        self.filter_by_open = UIButton(
             scale(pygame.Rect((x_pos, y_pos), (196, 68))),
             "",
             object_id="#filter_by_open_button", manager=MANAGER
@@ -555,7 +556,7 @@ class StarClanScreen(Screens):
         self.filter_by_open.hide()
         y_pos += 68
 
-        self.filter_rank = UIImageButton(
+        self.filter_rank = UIButton(
             scale(pygame.Rect((x_pos - 2, y_pos), (204, 58))),
             "",
             object_id="#filter_rank_button",
@@ -563,7 +564,7 @@ class StarClanScreen(Screens):
         )
         self.filter_rank.hide()
         y_pos += 58
-        self.filter_age = UIImageButton(
+        self.filter_age = UIButton(
             scale(pygame.Rect((x_pos - 2, y_pos), (204, 58))),
             "",
             object_id="#filter_age_button",
@@ -571,7 +572,7 @@ class StarClanScreen(Screens):
         )
         self.filter_age.hide()
         y_pos += 58
-        self.filter_id = UIImageButton(
+        self.filter_id = UIButton(
             scale(pygame.Rect((x_pos - 2, y_pos), (204, 58))),
             "",
             object_id="#filter_ID_button",
@@ -579,7 +580,7 @@ class StarClanScreen(Screens):
         )
         self.filter_id.hide()
         y_pos += 58
-        self.filter_exp = UIImageButton(
+        self.filter_exp = UIButton(
             scale(pygame.Rect((x_pos - 2, y_pos), (204, 58))),
             "",
             object_id="#filter_exp_button",
@@ -848,17 +849,17 @@ class DFScreen(Screens):
                                                               object_id="#search_entry_box"
                                                               , manager=MANAGER)
 
-        self.starclan_button = UIImageButton(scale(pygame.Rect((230, 270), (68, 68))), "", object_id="#starclan_button")
-        self.unknown_residence_button = UIImageButton(scale(pygame.Rect((298, 270), (68, 68))), "",
+        self.starclan_button = UIButton(scale(pygame.Rect((230, 270), (68, 68))), "", object_id="#starclan_button")
+        self.unknown_residence_button = UIButton(scale(pygame.Rect((298, 270), (68, 68))), "",
                                                       object_id="#unknown_residence_button", manager=MANAGER)
-        self.dark_forest_button = UIImageButton(scale(pygame.Rect((366, 270), (68, 68))), "",
+        self.dark_forest_button = UIButton(scale(pygame.Rect((366, 270), (68, 68))), "",
                                                 object_id="#dark_forest_button"
                                                 , manager=MANAGER)
         self.dark_forest_button.disable()
-        self.next_page_button = UIImageButton(scale(pygame.Rect((912, 1190), (68, 68))), "",
+        self.next_page_button = UIButton(scale(pygame.Rect((912, 1190), (68, 68))), "",
                                               object_id="#arrow_right_button"
                                               , manager=MANAGER)
-        self.previous_page_button = UIImageButton(scale(pygame.Rect((620, 1190), (68, 68))), "",
+        self.previous_page_button = UIButton(scale(pygame.Rect((620, 1190), (68, 68))), "",
                                                   object_id="#arrow_left_button", manager=MANAGER)
         self.page_number = pygame_gui.elements.UITextBox("", scale(pygame.Rect((680, 1190),(220, 60))),
                                                          object_id="#text_box_30_horizcenter_light",
@@ -872,13 +873,13 @@ class DFScreen(Screens):
 
         x_pos = 1152
         y_pos = 270
-        self.filter_by_closed = UIImageButton(
+        self.filter_by_closed = UIButton(
             scale(pygame.Rect((x_pos, y_pos), (196, 68))),
             "",
             object_id="#filter_by_closed_button",
             tool_tip_text="By default, cats are sorted by rank.", manager=MANAGER
         )
-        self.filter_by_open = UIImageButton(
+        self.filter_by_open = UIButton(
             scale(pygame.Rect((x_pos, y_pos), (196, 68))),
             "",
             object_id="#filter_by_open_button", manager=MANAGER
@@ -886,7 +887,7 @@ class DFScreen(Screens):
         self.filter_by_open.hide()
         y_pos += 68
 
-        self.filter_rank = UIImageButton(
+        self.filter_rank = UIButton(
             scale(pygame.Rect((x_pos - 2, y_pos), (204, 58))),
             "",
             object_id="#filter_rank_button",
@@ -894,7 +895,7 @@ class DFScreen(Screens):
         )
         self.filter_rank.hide()
         y_pos += 58
-        self.filter_age = UIImageButton(
+        self.filter_age = UIButton(
             scale(pygame.Rect((x_pos - 2, y_pos), (204, 58))),
             "",
             object_id="#filter_age_button",
@@ -902,7 +903,7 @@ class DFScreen(Screens):
         )
         self.filter_age.hide()
         y_pos += 58
-        self.filter_id = UIImageButton(
+        self.filter_id = UIButton(
             scale(pygame.Rect((x_pos - 2, y_pos), (204, 58))),
             "",
             object_id="#filter_ID_button",
@@ -910,7 +911,7 @@ class DFScreen(Screens):
         )
         self.filter_id.hide()
         y_pos += 58
-        self.filter_exp = UIImageButton(
+        self.filter_exp = UIButton(
             scale(pygame.Rect((x_pos - 2, y_pos), (204, 58))),
             "",
             object_id="#filter_exp_button",
@@ -1157,11 +1158,11 @@ class ListScreen(Screens):
         self.search_bar = pygame_gui.elements.UITextEntryLine(scale(pygame.Rect((845, 278), (294, 55))),
                                                               object_id="#search_entry_box", manager=MANAGER)
 
-        self.your_clan_button = UIImageButton(scale(pygame.Rect((230, 270), (68, 68))), "",
+        self.your_clan_button = UIButton(scale(pygame.Rect((230, 270), (68, 68))), "",
                                               object_id="#your_clan_button"
                                               , manager=MANAGER)
         self.your_clan_button.disable()
-        self.outside_clan_button = UIImageButton(scale(pygame.Rect((298, 270), (68, 68))), "",
+        self.outside_clan_button = UIButton(scale(pygame.Rect((298, 270), (68, 68))), "",
                                                  object_id="#outside_clan_button", manager=MANAGER)
 
         self.filter_fav = UIImageButton(scale(pygame.Rect((390, 275), (56, 56))), "",
@@ -1178,10 +1179,10 @@ class ListScreen(Screens):
         else:
             self.filter_fav.hide()
 
-        self.next_page_button = UIImageButton(scale(pygame.Rect((912, 1190), (68, 68))), "",
+        self.next_page_button = UIButton(scale(pygame.Rect((912, 1190), (68, 68))), "",
                                               object_id="#arrow_right_button"
                                               , manager=MANAGER)
-        self.previous_page_button = UIImageButton(scale(pygame.Rect((620, 1190), (68, 68))), "",
+        self.previous_page_button = UIButton(scale(pygame.Rect((620, 1190), (68, 68))), "",
                                                   object_id="#arrow_left_button", manager=MANAGER)
         self.page_number = pygame_gui.elements.UITextBox("", scale(pygame.Rect((680, 1190), (220, 60))),
                                                          object_id=get_text_box_theme("#text_box_30_horizcenter")
@@ -1194,13 +1195,13 @@ class ListScreen(Screens):
 
         x_pos = 1152
         y_pos = 270
-        self.filter_by_closed = UIImageButton(
+        self.filter_by_closed = UIButton(
             scale(pygame.Rect((x_pos, y_pos), (196, 68))),
             "",
             object_id="#filter_by_closed_button",
             tool_tip_text="By default, cats are sorted by rank.", manager=MANAGER
         )
-        self.filter_by_open = UIImageButton(
+        self.filter_by_open = UIButton(
             scale(pygame.Rect((x_pos, y_pos), (196, 68))),
             "",
             object_id="#filter_by_open_button", manager=MANAGER
@@ -1208,7 +1209,7 @@ class ListScreen(Screens):
         self.filter_by_open.hide()
         y_pos += 68
 
-        self.filter_rank = UIImageButton(
+        self.filter_rank = UIButton(
             scale(pygame.Rect((x_pos - 2, y_pos), (204, 58))),
             "",
             object_id="#filter_rank_button",
@@ -1216,7 +1217,7 @@ class ListScreen(Screens):
         )
         self.filter_rank.hide()
         y_pos += 58
-        self.filter_age = UIImageButton(
+        self.filter_age = UIButton(
             scale(pygame.Rect((x_pos - 2, y_pos), (204, 58))),
             "",
             object_id="#filter_age_button",
@@ -1224,7 +1225,7 @@ class ListScreen(Screens):
         )
         self.filter_age.hide()
         y_pos += 58
-        self.filter_id = UIImageButton(
+        self.filter_id = UIButton(
             scale(pygame.Rect((x_pos - 2, y_pos), (204, 58))),
             "",
             object_id="#filter_ID_button",
@@ -1232,7 +1233,7 @@ class ListScreen(Screens):
         )
         self.filter_id.hide()
         y_pos += 58
-        self.filter_exp = UIImageButton(
+        self.filter_exp = UIButton(
             scale(pygame.Rect((x_pos - 2, y_pos), (204, 58))),
             "",
             object_id="#filter_exp_button",
@@ -1697,11 +1698,11 @@ class MedDenScreen(Screens):
 
     def screen_switches(self):
         self.hide_menu_buttons()
-        self.back_button = UIImageButton(scale(pygame.Rect((50, 50), (210, 60))), "", object_id="#back_button"
+        self.back_button = UIButton(scale(pygame.Rect((50, 50), (210, 60))), "", object_id="#back_button"
                                          , manager=MANAGER)
-        self.next_med = UIImageButton(scale(pygame.Rect((1290, 556), (68, 68))), "", object_id="#arrow_right_button"
+        self.next_med = UIButton(scale(pygame.Rect((1290, 556), (68, 68))), "", object_id="#arrow_right_button"
                                       , manager=MANAGER)
-        self.last_med = UIImageButton(scale(pygame.Rect((1200, 556), (68, 68))), "", object_id="#arrow_left_button"
+        self.last_med = UIButton(scale(pygame.Rect((1200, 556), (68, 68))), "", object_id="#arrow_left_button"
                                       , manager=MANAGER)
 
         if game.clan.game_mode != 'classic':
@@ -1716,9 +1717,9 @@ class MedDenScreen(Screens):
                               "Hover your mouse over the medicine den image to see what herbs your Clan has!",
 
             )
-            self.last_page = UIImageButton(scale(pygame.Rect((660, 1272), (68, 68))), "", object_id="#arrow_left_button"
+            self.last_page = UIButton(scale(pygame.Rect((660, 1272), (68, 68))), "", object_id="#arrow_left_button"
                                            , manager=MANAGER)
-            self.next_page = UIImageButton(scale(pygame.Rect((952, 1272), (68, 68))), "",
+            self.next_page = UIButton(scale(pygame.Rect((952, 1272), (68, 68))), "",
                                            object_id="#arrow_right_button"
                                            , manager=MANAGER)
 
