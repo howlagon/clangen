@@ -112,7 +112,7 @@ class NewCatEvents:
         if "adoption" in new_cat_event.tags:
             if cat.no_kits:
                 return
-            if cat.mate and cat.mate.no_kits:
+            if cat.mate and Cat.fetch_cat(cat.mate).no_kits:
                 return
         for new_cat in created_cats:
             involved_cats.append(new_cat.ID)
