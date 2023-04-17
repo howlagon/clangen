@@ -290,31 +290,31 @@ class EventsScreen(Screens):
         #                                                              "Close Clan Borders")
 
         # Sets up the buttons to switch between the event types.
-        self.all_events_button = UIImageButton(
+        self.all_events_button = UIButton(
             scale(pygame.Rect((120, 570), (300, 60))),
             "",
             object_id="#all_events_button", manager=MANAGER)
-        self.ceremonies_events_button = UIImageButton(
+        self.ceremonies_events_button = UIButton(
             scale(pygame.Rect((120, 672), (300, 60))),
             "",
             object_id="#ceremony_events_button", manager=MANAGER)
-        self.birth_death_events_button = UIImageButton(
+        self.birth_death_events_button = UIButton(
             scale(pygame.Rect((120, 772), (300, 60))),
             "",
             object_id="#birth_death_events_button", manager=MANAGER)
-        self.relationship_events_button = UIImageButton(
+        self.relationship_events_button = UIButton(
             scale(pygame.Rect((120, 872), (300, 60))),
             "",
             object_id="#relationship_events_button")
-        self.health_events_button = UIImageButton(
+        self.health_events_button = UIButton(
             scale(pygame.Rect((120, 972), (300, 60))),
             "",
             object_id="#health_events_button", manager=MANAGER)
-        self.other_clans_events_button = UIImageButton(
+        self.other_clans_events_button = UIButton(
             scale(pygame.Rect((120, 1072), (300, 60))),
             "",
             object_id="#other_clans_events_button", manager=MANAGER)
-        self.misc_events_button = UIImageButton(
+        self.misc_events_button = UIButton(
             scale(pygame.Rect((120, 1172), (300, 60))),
             "",
             object_id="#misc_events_button", manager=MANAGER)

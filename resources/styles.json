@@ -71,7 +71,17 @@
         "#outside_clan_button": [false, true, false, true],
         "#starclan_button": [true, false, true, false],
         "#unknown_residence_button": [false, false, false, false],
-        "#dark_forest_button": [false, true, false, true]
+        "#dark_forest_button": [false, true, false, true],
+        "#skills_cats_tab": [true, true, false, false],
+        "#patrol_cats_tab": [true, true, false, false],
+        "#remove_all_button": [false, false, true, true],
+        "#all_events_button": [true, false, true, false],
+        "#ceremony_events_button": [true, false, true, false],
+        "#birth_death_events_button": [true, false, true, false],
+        "#relationship_events_button": [true, false, true, false],
+        "#health_events_button": [true, false, true, false],
+        "#other_clans_events_button": [true, false, true, false],
+        "#misc_events_button": [true, false, true, false]
     },
     "hanging": {
         "#english_lang_button": false,

@@ -634,7 +634,7 @@ class ProfileScreen(Screens):
         self.profile_elements["cat_image"].disable()
 
         # if cat is a med or med app, show button for their den
-        self.profile_elements["med_den"] = UIImageButton(scale(pygame.Rect
+        self.profile_elements["med_den"] = UIButton(scale(pygame.Rect
                                                                ((200, 760), (302, 56))),
                                                          "",
                                                          object_id="#med_den_button"

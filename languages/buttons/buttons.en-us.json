@@ -105,6 +105,16 @@
         "#begin_anew_button": "begin anew",
         "#not_yet_button": "not yet",
         "#done_button": "done",
-        "#cancel_button": "cancel"
+        "#cancel_button": "cancel",
+        "#skills_cats_tab": "Skills & Traits",
+        "#patrol_cats_tab": "Patrol",
+        "#remove_all_button": "Remove All",
+        "#all_events_button": "all events",
+        "#ceremony_events_button": "ceremonies",
+        "#birth_death_events_button": "births & deaths",
+        "#relationship_events_button": "relationships",
+        "#health_events_button": "health",
+        "#other_clans_events_button": "other clans",
+        "#misc_events_button": "miscellaneous"
     }
 }
