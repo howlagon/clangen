@@ -72,7 +72,7 @@ import pygame_gui
 import warnings
 import re
 import i18n
-from typing import Union
+from typing import Union, Tuple, Dict, Optional
 import scripts.game_structure.image_button
 
 try:
@@ -393,12 +393,13 @@ class UIButton(scripts.game_structure.image_button.UISpriteButton):
                 Button.new(size=relative_rect.size, text=self.text, rounded_corners=self.rounded_corners, hanging=self.hanging, shadows=self.shadows),
                            size=relative_rect.size,
                            text=self.text, rounded_corners=self.rounded_corners, hanging=self.hanging, shadows=self.shadows)
-        self.image = pygame_gui.elements.UIImage(relative_rect,
+        self.image = pyggui_UIImage(relative_rect,
                                                  pygame.transform.scale(sprite, relative_rect.size),
                                                  visible=visible,
                                                  manager=manager,
                                                  container=container,
-                                                 object_id=object_id)
+                                                 object_id=object_id,
+                                                 starting_height=starting_height)
         self.image.disable()
         # The transparent button. This a subclass that UIButton that also hold the cat_id.
         self.button = CatButton(relative_rect, visible=visible,
@@ -834,3 +835,32 @@ class Button():
 
         button = Button.new(size, text, hover, unavailable, rounded_corners, shadows, hanging)
         return button
+
+class pyggui_UIImage(pygame_gui.elements.UIImage):
+    def __init__(self,
+                 relative_rect: pygame.Rect,
+                 image_surface: pygame.surface.Surface,
+                 manager: Optional[pygame_gui.core.interfaces.IUIManagerInterface] = None,
+                 image_is_alpha_premultiplied: bool = False,
+                 container: Optional[pygame_gui.core.interfaces.IContainerLikeInterface] = None,
+                 parent_element: Optional[pygame_gui.core.UIElement] = None,
+                 object_id: Optional[Union[pygame_gui.core.ObjectID, str]] = None,
+                 anchors: Optional[Dict[str, Union[str, pygame_gui.core.UIElement]]] = None,
+                 visible: int = 1,
+                 starting_height: int = 1):
+
+        super(pygame_gui.elements.UIImage, self).__init__(relative_rect, manager, container,
+                         starting_height=starting_height,
+                         layer_thickness=1,
+
+                         anchors=anchors,
+                         visible=visible)
+
+        super(pygame_gui.elements.UIImage, self)._create_valid_ids(container=container,
+                               parent_element=parent_element,
+                               object_id=object_id,
+                               element_id='image')
+
+        self.original_image = None
+
+        super().set_image(image_surface, image_is_alpha_premultiplied)
