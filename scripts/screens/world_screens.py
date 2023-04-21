@@ -129,7 +129,6 @@ class OutsideClanScreen(Screens):
     def screen_switches(self):
         
         # Determine the living, non-exiled cats.
-        cat_profiles()
         self.get_living_cats()
 
         self.search_bar = pygame_gui.elements.UITextEntryLine(scale(pygame.Rect((845, 278), (294, 55))),
@@ -296,7 +295,7 @@ class OutsideClanScreen(Screens):
                 self.display_cats.append(
                     UISpriteButton(scale(pygame.Rect
                                    ((260 + pos_x, 360 + pos_y), (100, 100))),
-                                   cat.big_sprite,
+                                   cat.sprite,
                                    cat.ID,
                                    starting_height=1, manager=MANAGER))
 
@@ -470,7 +469,6 @@ class UnknownResScreen(Screens):
 
     def screen_switches(self):
         # Determine the dead, non-exiled cats.
-        cat_profiles()
         self.get_dead_cats()
 
         self.search_bar = pygame_gui.elements.UITextEntryLine(scale(pygame.Rect((845, 278), (294, 55))),
@@ -617,7 +615,7 @@ class UnknownResScreen(Screens):
                 self.display_cats.append(
                     UISpriteButton(scale(pygame.Rect
                                    ((260 + pos_x, 360 + pos_y), (100, 100))),
-                                   cat.big_sprite,
+                                   cat.sprite,
                                    cat.ID,
                                    starting_height=1, manager=MANAGER))
 

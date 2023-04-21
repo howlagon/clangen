@@ -75,7 +75,6 @@ class ClanScreen(Screens):
                 self.menu_button_pressed(event)
 
     def screen_switches(self):
-        cat_profiles()
         self.update_camp_bg()
         game.switches['cat'] = None
         if game.clan.biome + game.clan.camp_bg in game.clan.layouts:
@@ -106,7 +105,7 @@ class ClanScreen(Screens):
                 try:
                     self.cat_buttons.append(
                         UISpriteButton(scale(pygame.Rect(tuple(Cat.all_cats[x].placement), (100, 100))),
-                                       Cat.all_cats[x].big_sprite,
+                                       Cat.all_cats[x].sprite,
                                        cat_id=x,
                                        starting_height=i)
                     )
@@ -510,7 +509,6 @@ class StarClanScreen(Screens):
 
     def screen_switches(self):
         # Determine the dead, non-exiled cats.
-        cat_profiles()
         self.get_dead_cats()
 
         self.search_bar = pygame_gui.elements.UITextEntryLine(scale(pygame.Rect((845, 278), (294, 55))),
@@ -662,7 +660,7 @@ class StarClanScreen(Screens):
                 self.display_cats.append(
                     UISpriteButton(scale(pygame.Rect
                                          ((260 + pos_x, 360 + pos_y), (100, 100))),
-                                   cat.big_sprite,
+                                   cat.sprite,
                                    cat.ID,
                                    starting_height=1, manager=MANAGER))
 
@@ -842,7 +840,6 @@ class DFScreen(Screens):
 
     def screen_switches(self):
         # Determine the dead, non-exiled cats.
-        cat_profiles()
         self.get_dead_cats()
 
         self.search_bar = pygame_gui.elements.UITextEntryLine(scale(pygame.Rect((845, 278), (294, 55))),
@@ -993,7 +990,7 @@ class DFScreen(Screens):
                 self.display_cats.append(
                     UISpriteButton(scale(pygame.Rect
                                          ((260 + pos_x, 360 + pos_y), (100, 100))),
-                                   cat.big_sprite,
+                                   cat.sprite,
                                    cat.ID,
                                    starting_height=1))
 
@@ -1152,7 +1149,6 @@ class ListScreen(Screens):
 
     def screen_switches(self):
         # Determine the living, non-exiled cats.
-        cat_profiles()
         self.get_living_cats()
 
         self.search_bar = pygame_gui.elements.UITextEntryLine(scale(pygame.Rect((845, 278), (294, 55))),
@@ -1204,7 +1200,8 @@ class ListScreen(Screens):
         self.filter_by_open = UIButton(
             scale(pygame.Rect((x_pos, y_pos), (196, 68))),
             "",
-            object_id="#filter_by_open_button", manager=MANAGER
+            object_id="#filter_by_open_button", manager=MANAGER,
+            starting_height=2
         )
         self.filter_by_open.hide()
         y_pos += 68
@@ -1341,7 +1338,7 @@ class ListScreen(Screens):
                 self.display_cats.append(
                     UISpriteButton(scale(pygame.Rect
                                          ((260 + pos_x, 360 + pos_y), (100, 100))),
-                                   cat.big_sprite,
+                                   cat.sprite,
                                    cat.ID,
                                    starting_height=1, manager=MANAGER))
 
@@ -1970,7 +1967,7 @@ class MedDenScreen(Screens):
         for cat in self.display_med:
             self.med_cat = UISpriteButton(scale(pygame.Rect
                                                 ((870, 330), (300, 300))),
-                                          cat.large_sprite,
+                                          cat.sprite,
                                           cat_object=cat, manager=MANAGER)
             name = str(cat.name)
             if len(name) >= 20:
@@ -2057,7 +2054,7 @@ class MedDenScreen(Screens):
 
             self.cat_buttons["able_cat" + str(i)] = UISpriteButton(scale(pygame.Rect
                                                                          ((pos_x, pos_y), (100, 100))),
-                                                                   cat.big_sprite,
+                                                                   cat.sprite,
                                                                    cat_object=cat,
                                                                    manager=MANAGER,
                                                                    tool_tip_text=conditions)
