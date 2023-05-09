@@ -119,6 +119,7 @@ class SaveCheck(UIWindow):
                     self.save_button.disable()
                     game.save_cats()
                     game.clan.save_clan()
+                    game.clan.backup_clan()
                     game.clan.save_pregnancy(game.clan)
                     self.save_button_saving_state.hide()
                     self.save_button_saved_state.show()

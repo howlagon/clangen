@@ -94,6 +94,10 @@ saves\
 saves\clanlist.txt
 saves\settings.txt
 
+# Backups
+backups/
+backups\
+
 # Logs
 logs/
 

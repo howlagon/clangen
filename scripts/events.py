@@ -259,7 +259,12 @@ class Events():
                 game.clan.save_pregnancy(game.clan)
             except:
                 SaveError(traceback.format_exc())
-
+        # auto backup
+        if game.settings.get('auto backup') is True and game.clan.age % 5 == 0:
+            try:
+                game.clan.backup_clan()
+            except:
+                SaveError(traceback.format_exc())
     def mediator_events(self, cat):
         """ Check for mediator events """
         # If the cat is a mediator, check if they visited other clans

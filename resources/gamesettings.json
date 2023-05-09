@@ -56,6 +56,11 @@
             "Automatically save every five moons.",
             false
         ],
+        "auto backup": [
+            "Automatically backup your clan every five moons",
+            "Automatically backup your clan every five moons.",
+            false
+        ],
         "disasters": [
             "Allow mass extinction events",
             "This may result in up to 1/3rd of your Clan dying in one moon.",

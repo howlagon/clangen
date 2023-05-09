@@ -257,6 +257,9 @@
 	"save_load": {
 		"load_integrity_checks": true
 	},
+	"backup": {
+		"use_gzip": true
+	},
 
 
 	"lock_season": false, 

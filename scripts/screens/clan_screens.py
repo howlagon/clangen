@@ -58,6 +58,7 @@ class ClanScreen(Screens):
                     self.save_button.disable()
                     game.save_cats()
                     game.clan.save_clan()
+                    game.clan.backup_clan()
                     game.clan.save_pregnancy(game.clan)
                     game.save_settings()
                     game.switches['saved_clan'] = True

@@ -11,11 +11,12 @@ TODO: Docs
 import random
 from random import choice, randint
 import os
+import tarfile
 
 import pygame
 
 from scripts.events_module.generate_events import OngoingEvent
-from scripts.datadir import get_save_dir
+from scripts.datadir import get_save_dir, get_data_dir
 
 import ujson
 
@@ -771,7 +772,43 @@ class Clan():
         if os.path.exists(get_save_dir() + f'/{self.name}clan.txt'):   
             os.remove(get_save_dir() + f'/{self.name}clan.txt')
 
-            
+    def backup_clan(self):
+        """Creates a backup for the clan to a .tar or .tar.gz file.
+        Saved as <clan_name>clan_<moons>.tar[.gz]
+        """
+        use_gz = game.config['backup']['use_gzip']
+        clanname = ''
+        if game.clan is not None:
+            clanname = game.clan.name
+
+        backup_file = get_data_dir() + '/backups/' + clanname + f"/moon_{game.clan.age}.tar{'.gz' if use_gz else ''}"
+        if not os.path.exists(get_data_dir() + '/backups/'):
+            os.mkdir(get_data_dir() + '/backups/')
+        if not os.path.exists(get_data_dir() + '/backups/' + clanname):
+            os.mkdir(get_data_dir() + '/backups/' + clanname)
+        with tarfile.open(backup_file, 'w:gz' if use_gz else 'w') as tar:
+            tar.add(get_save_dir(), arcname=clanname)
+        self.purge_old_backups()
+
+    def purge_old_backups(self, moon_count=30):
+        """Automatically removes old backups from the clan's backup folder.
+
+        Args:
+            moon_count (int, optional): The maximum age of saves to keep. Defaults to 30.
+        """
+        for clan in os.listdir(get_data_dir() + '/backups/'):
+            clan_dir = get_data_dir() + '/backups/' + clan
+            if not os.path.isdir(clan_dir):
+                continue
+
+            for backup in os.listdir(clan_dir):
+                backup_file = clan_dir + '/' + backup
+                if not os.path.isfile(backup_file):
+                    continue
+                backup_moon = int(backup.split('_')[1].split('.')[0])
+                if backup_moon < game.clan.age - moon_count:
+                    os.remove(backup_file)
+
     def save_clan_settings(self):
        game.safe_save(f"{get_save_dir()}/{self.name}/clan_settings.json", self.clan_settings)
 
