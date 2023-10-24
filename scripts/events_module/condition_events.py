@@ -1,4 +1,4 @@
-import ujson
+import json as ujson
 import random
 from copy import deepcopy
 

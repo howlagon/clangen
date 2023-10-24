@@ -1,6 +1,6 @@
 import pygame
 import logging
-import ujson
+import json as ujson
 logger = logging.getLogger(__name__)
 
 

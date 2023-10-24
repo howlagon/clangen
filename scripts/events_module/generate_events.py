@@ -2,7 +2,7 @@
 # -*- coding: ascii -*-
 import random
 
-import ujson
+import json as ujson
 from scripts.game_structure.game_essentials import game
 
 resource_directory = "resources/dicts/events/"

@@ -4,7 +4,7 @@ import random
 from random import choice, randint, choices
 from typing import List, Tuple
 
-import ujson
+import json as ujson
 import pygame
 from os.path import exists as path_exists
 

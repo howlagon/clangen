@@ -18,12 +18,11 @@ from scripts.cat.history import History
 from scripts.events_module.generate_events import OngoingEvent
 from scripts.housekeeping.datadir import get_save_dir
 
-import ujson
-import statistics
+import json as ujson 
 
 from scripts.game_structure.game_essentials import game
 from scripts.housekeeping.version import get_version_info, SAVE_VERSION_NUMBER
-from scripts.utility import update_sprite, get_current_season, quit  # pylint: disable=redefined-builtin
+from scripts.utility import update_sprite, get_current_season, quit, median, mean  # pylint: disable=redefined-builtin
 from scripts.cat.cats import Cat, cat_class
 from scripts.cat.names import names
 from scripts.clan_resources.freshkill import Freshkill_Pile, Nutrition
@@ -1031,16 +1030,16 @@ class Clan():
         weight = 0.3
 
         if (leader or deputy) and all_cats:
-            clan_sociability = round(weight * statistics.mean([i.personality.sociability for i in [leader, deputy] if i]) + \
-                (1-weight) *  statistics.median([i.personality.sociability for i in all_cats]))
-            clan_aggression = round(weight * statistics.mean([i.personality.aggression for i in [leader, deputy] if i]) + \
-                (1-weight) *  statistics.median([i.personality.aggression for i in all_cats]))
+            clan_sociability = round(weight * mean([i.personality.sociability for i in [leader, deputy] if i]) + \
+                (1-weight) *  median([i.personality.sociability for i in all_cats]))
+            clan_aggression = round(weight * mean([i.personality.aggression for i in [leader, deputy] if i]) + \
+                (1-weight) *  median([i.personality.aggression for i in all_cats]))
         elif (leader or deputy):
-            clan_sociability = round(statistics.mean([i.personality.sociability for i in [leader, deputy] if i]))
-            clan_aggression = round(statistics.mean([i.personality.aggression for i in [leader, deputy] if i]))
+            clan_sociability = round(mean([i.personality.sociability for i in [leader, deputy] if i]))
+            clan_aggression = round(mean([i.personality.aggression for i in [leader, deputy] if i]))
         elif all_cats:
-            clan_sociability = round(statistics.median([i.personality.sociability for i in all_cats]))
-            clan_aggression = round(statistics.median([i.personality.aggression for i in all_cats]))
+            clan_sociability = round(median([i.personality.sociability for i in all_cats]))
+            clan_aggression = round(median([i.personality.aggression for i in all_cats]))
         else:
             return "stoic"
         

@@ -2,6 +2,7 @@ import os
 import platform
 
 from scripts.housekeeping.version import get_version_info
+from scripts.housekeeping.platformwrapper import _is_web
 
 
 def setup_data_dir():
@@ -26,14 +27,16 @@ def setup_data_dir():
 
 
 def get_data_dir():
+    if _is_web():
+        return '/saves'
     if get_version_info().is_source_build:
         return '.'
 
-    from platformdirs import user_data_dir
+    # from platformdirs import user_data_dir
 
-    if get_version_info().is_dev():
-        return user_data_dir('ClanGenBeta', 'ClanGen')
-    return user_data_dir('ClanGen', 'ClanGen')
+    # if get_version_info().is_dev():
+    #     return user_data_dir('ClanGenBeta', 'ClanGen')
+    # return user_data_dir('ClanGen', 'ClanGen')
 
 
 def get_log_dir():

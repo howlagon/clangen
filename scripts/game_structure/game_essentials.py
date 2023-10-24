@@ -3,7 +3,7 @@ import pygame_gui
 
 from scripts.housekeeping.datadir import get_save_dir, get_temp_dir
 
-import ujson
+import json as ujson
 import os
 from shutil import move as shutil_move
 from ast import literal_eval

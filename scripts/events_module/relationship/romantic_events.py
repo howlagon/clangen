@@ -3,7 +3,7 @@ from copy import deepcopy
 from random import choice
 import random
 
-import ujson
+import json as ujson
 
 from scripts.cat.history import History
 from scripts.utility import (

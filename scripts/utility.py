@@ -14,7 +14,7 @@ from scripts.cat.history import History
 from scripts.cat.names import names
 from scripts.cat.pelts import Pelt
 
-import ujson
+import json as ujson
 import logging
 
 logger = logging.getLogger(__name__)
@@ -1437,3 +1437,47 @@ with open(f"resources/dicts/prey_text_replacements.json", 'r') as read_file:
 
 with open(f"resources/dicts/backstories.json", 'r') as read_file:
     BACKSTORIES = ujson.loads(read_file.read())
+
+def mean(data: list):
+    """Return the median (middle value) of numeric data.
+
+    When the number of data points is odd, return the middle data point.
+    When the number of data points is even, the median is interpolated by
+    taking the average of the two middle values:
+
+    >>> median([1, 3, 5])
+    3
+    >>> median([1, 3, 5, 7])
+    4.0
+
+    """
+    total = sum(data)
+    n = len(total)
+    if n < 1:
+        raise ValueError('mean requires at least one data point')
+    if n % 2 == 1:
+        return total[n // 2]
+    return total[n // 2 - 1] / 2 + total[n // 2] / 2
+
+def median(data):
+    """Return the median (middle value) of numeric data.
+
+    When the number of data points is odd, return the middle data point.
+    When the number of data points is even, the median is interpolated by
+    taking the average of the two middle values:
+
+    >>> median([1, 3, 5])
+    3
+    >>> median([1, 3, 5, 7])
+    4.0
+
+    """
+    data = sorted(data)
+    n = len(data)
+    if n == 0:
+        raise ValueError("no median for empty data")
+    if n % 2 == 1:
+        return data[n // 2]
+    else:
+        i = n // 2
+        return (data[i - 1] + data[i]) / 2

@@ -26,7 +26,7 @@ from scripts.cat.cats import Cat
 from scripts.game_structure import image_cache
 from scripts.game_structure.game_essentials import game, screen, screen_x, screen_y, MANAGER
 from scripts.game_structure.image_button import UIImageButton
-from scripts.game_structure.windows import UpdateAvailablePopup, ChangelogPopup
+from scripts.game_structure.windows import ChangelogPopup
 from scripts.utility import scale, quit  # pylint: disable=redefined-builtin
 from .Screens import Screens
 from ..housekeeping.datadir import get_data_dir, get_cache_dir
@@ -84,8 +84,6 @@ class StartScreen(Screens):
                 self.open_data_directory_button.kill()
                 # game.switches['error_message'] = ''
                 # game.switches['traceback'] = ''
-            elif event.ui_element == self.update_button:
-                UpdateAvailablePopup(game.switches['last_screen'])
             elif event.ui_element == self.quit:
                 quit(savesettings=False, clearevents=False)
             elif event.ui_element == self.social_buttons['discord_button']:
@@ -260,9 +258,6 @@ class StartScreen(Screens):
                             if read_file.readline() == get_latest_version_number():
                                 show_popup = False
 
-                    if show_popup:
-                        UpdateAvailablePopup(
-                            game.switches['last_screen'], show_checkbox=True)
 
                 has_checked_for_update = True
 

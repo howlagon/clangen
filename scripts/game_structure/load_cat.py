@@ -6,7 +6,7 @@ from ..cat.history import History
 from ..cat.skills import CatSkills
 from ..housekeeping.datadir import get_save_dir
 
-import ujson
+import json as ujson
 
 from re import sub
 from scripts.cat.pelts import Pelt

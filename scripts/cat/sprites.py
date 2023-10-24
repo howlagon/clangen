@@ -1,6 +1,6 @@
 import pygame
 
-import ujson
+import json as ujson
 
 from scripts.game_structure.game_essentials import game
 

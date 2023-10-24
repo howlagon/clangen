@@ -2,7 +2,7 @@ import os
 import traceback
 from random import choice
 
-import ujson
+import json as ujson
 
 class Thoughts():
     @staticmethod
