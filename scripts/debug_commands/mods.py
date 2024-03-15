@@ -27,7 +27,7 @@ class ListMods(Command):
 
     def callback(self, args):
         for mod in mods:
-            add_output_line_to_log(f"{mod['name']} v{mod['version']} - {mod['description']}")
+            add_output_line_to_log(f"{mod['name']} by {mod['author']} - version {mod['version']}")
 
 class ModsCommand(Command):
     name = "mods"

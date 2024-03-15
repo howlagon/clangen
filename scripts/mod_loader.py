@@ -11,7 +11,8 @@ if not os.path.exists("mods"):
 mod_count = 0
 mods = []
 for mod in glob.glob("mods/*"):
-    if not os.path.exists(f"{mod}/mod.json"): continue
+    if not os.path.exists(f"{mod}/mod.json"): 
+        raise FileNotFoundError(f"Mod {mod} is missing mod.json")
     mod_data: dict = ujson.load(open(f"{mod}/mod.json"))
     if not all([mod_data.get(key) for key in ["name", "version", "description", "author"]]):
         raise ValueError(f"Mod {mod} is missing adequate data in mod.json. Required fields: name, author, description, version")
