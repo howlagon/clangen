@@ -54,12 +54,12 @@ class _FileHandler:
         return io.BytesIO(cls.memory[file]["file"])
 
     @classmethod
-    def load_file(cls, file, mode='r', buffering=-1, encoding=None, errors=None, newline=None) -> io.TextIOWrapper | io.BytesIO:
+    def load_file(cls, file, mode='r', buffering=-1, encoding=None, errors=None, newline=None):
         """Reimplementation of the builtin open function that uses the lookup table to redirect file paths.
         https://docs.python.org/3/library/functions.html#open
 
         Returns:
-            io.TextIOWrapper
+            io.TextIOWrapper | io.BytesIO: just treat this like a file you'll be fine
         """
         if not isinstance(file, str):
            return Path(file).open(mode, buffering, encoding, errors, newline)
