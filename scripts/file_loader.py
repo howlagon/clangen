@@ -42,12 +42,13 @@ class _FileHandler:
         Returns:
             io.TextIOWrapper
         """
-        file = file.replace("\\", "/")
-        if file in cls.lookup_table.keys():
-            if file.endswith(".json") and cls.lookup_table[file]["extend"]:
-                return _extend_json(cls.lookup_table[file]["file"], file)
-            file = cls.lookup_table[file]["file"]
-        return Path(file).open(mode, buffering, encoding, errors, newline)
+        if not isinstance(file, str):
+            file = str(file)
+        if file.replace("\\", "/") in cls.lookup_table.keys():
+            if file.endswith(".json") and cls.lookup_table[file.replace("\\", "/")]["extend"]:
+                return _extend_json(cls.lookup_table[file.replace("\\", "/")]["file"], file)
+            file = cls.lookup_table[file.replace("\\", "/")]["file"]
+        return Path(file.replace("\\", "/")).open(mode, buffering, encoding, errors, newline)
     
     @classmethod
     def change_binding(cls, original: str, new: str, extend=False):
