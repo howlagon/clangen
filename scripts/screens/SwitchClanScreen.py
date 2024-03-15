@@ -18,6 +18,7 @@ from scripts.utility import get_text_box_theme, scale, quit  # pylint: disable=r
 from .Screens import Screens
 from ..housekeeping.datadir import get_data_dir
 from ..housekeeping.version import get_version_info
+from scripts.file_loader import image_load
 
 logger = logging.getLogger(__name__)
 
@@ -100,7 +101,7 @@ class SwitchClanScreen(Screens):
         TODO: DOCS
         """
         self.screen = pygame.transform.scale(
-            pygame.image.load(
+            image_load(
                 "resources/images/clan_saves_frame.png").convert_alpha(),
             (440 / 1600 * screen_x, 750 / 1400 * screen_y))
         self.main_menu = UIImageButton(scale(pygame.Rect((50, 50), (306, 60))),

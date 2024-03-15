@@ -7,6 +7,7 @@ from scripts.game_structure.image_button import UISpriteButton, UIImageButton, U
 from scripts.utility import get_text_box_theme, scale, get_med_cats, shorten_text_to_fit
 from scripts.game_structure.game_essentials import game, MANAGER
 from ..conditions import get_amount_cat_for_one_medic, medical_cats_condition_fulfilled
+from scripts.file_loader import image_load
 
 
 class MedDenScreen(Screens):
@@ -145,7 +146,7 @@ class MedDenScreen(Screens):
             self.log_title.hide()
             self.cat_bg = pygame_gui.elements.UIImage(scale(pygame.Rect
                                                             ((280, 880), (1120, 400))),
-                                                      pygame.image.load(
+                                                      image_load(
                                                           "resources/images/sick_hurt_bg.png").convert_alpha()
                                                       , manager=MANAGER)
             self.cat_bg.disable()
@@ -537,7 +538,7 @@ class MedDenScreen(Screens):
                 self.herbs["cobweb1"] = pygame_gui.elements.UIImage(scale(pygame.Rect
                                                                           ((216, 190), (792, 448))),
                                                                     pygame.transform.scale(
-                                                                        pygame.image.load(
+                                                                        image_load(
                                                                             "resources/images/med_cat_den/cobweb1.png").convert_alpha(),
                                                                         (792, 448)
                                                                     ), manager=MANAGER)
@@ -545,7 +546,7 @@ class MedDenScreen(Screens):
                     self.herbs["cobweb2"] = pygame_gui.elements.UIImage(scale(pygame.Rect
                                                                               ((216, 190), (792, 448))),
                                                                         pygame.transform.scale(
-                                                                            pygame.image.load(
+                                                                            image_load(
                                                                                 "resources/images/med_cat_den/cobweb2.png").convert_alpha(),
                                                                             (792, 448)
                                                                         ), manager=MANAGER)
@@ -553,7 +554,7 @@ class MedDenScreen(Screens):
             self.herbs[herb] = pygame_gui.elements.UIImage(scale(pygame.Rect
                                                                  ((216, 190), (792, 448))),
                                                            pygame.transform.scale(
-                                                               pygame.image.load(
+                                                               image_load(
                                                                    f"resources/images/med_cat_den/{herb}.png").convert_alpha(),
                                                                (792, 448)
                                                            ), manager=MANAGER)

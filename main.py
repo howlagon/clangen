@@ -54,6 +54,8 @@ if not getattr(sys, 'frozen', False):
     del isMissing
 del find_spec
 
+import scripts.mod_loader # pylint: disable=unused-import
+
 from scripts.housekeeping.log_cleanup import prune_logs
 from scripts.housekeeping.stream_duplexer import UnbufferedStreamDuplexer
 from scripts.housekeeping.datadir import get_log_dir, setup_data_dir
@@ -152,6 +154,7 @@ from scripts.cat.sprites import sprites
 from scripts.clan import clan_class
 from scripts.utility import get_text_box_theme, quit, scale  # pylint: disable=redefined-builtin
 from scripts.debug_menu import debugmode
+from scripts.file_loader import image_load
 import pygame_gui
 import pygame
 

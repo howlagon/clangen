@@ -26,6 +26,7 @@ from scripts.patrol.patrol_event import PatrolEvent
 from scripts.patrol.patrol_outcome import PatrolOutcome
 from scripts.cat.cats import Cat
 from scripts.special_dates import get_special_date, contains_special_date_tag
+from scripts.file_loader import image_load
 
 # ---------------------------------------------------------------------------- #
 #                              PATROL CLASS START                              #

@@ -7,6 +7,7 @@ from scripts.cat.cats import Cat
 from scripts.game_structure.image_button import UISpriteButton, UIImageButton
 from scripts.utility import get_text_box_theme, scale, shorten_text_to_fit
 from scripts.game_structure.game_essentials import game, screen, screen_x, screen_y, MANAGER
+from scripts.file_loader import image_load
 
 
 class ListScreen(Screens):
@@ -60,13 +61,13 @@ class ListScreen(Screens):
         self.current_listed_cats = None
 
         self.sc_bg = pygame.transform.scale(
-            pygame.image.load("resources/images/starclanbg.png").convert(),
+            image_load("resources/images/starclanbg.png").convert(),
             (screen_x, screen_y))
         self.df_Bg = pygame.transform.scale(
-            pygame.image.load("resources/images/darkforestbg.png").convert(),
+            image_load("resources/images/darkforestbg.png").convert(),
             (screen_x, screen_y))
         self.ur_bg = pygame.transform.scale(
-            pygame.image.load("resources/images/urbg.png").convert(),
+            image_load("resources/images/urbg.png").convert(),
             (screen_x, screen_y))
 
     def handle_event(self, event):
@@ -217,7 +218,7 @@ class ListScreen(Screens):
 
         # search bar
         self.search_bar_image = pygame_gui.elements.UIImage(scale(pygame.Rect((279, y_pos), (236, 68))),
-                                                            pygame.image.load(
+                                                            image_load(
                                                                 "resources/images/search_bar.png").convert_alpha(),
                                                             manager=MANAGER)
 
@@ -619,7 +620,7 @@ class ListScreen(Screens):
                 if game.clan.clan_settings["show fav"] and cat.favourite:
 
                     _temp = pygame.transform.scale(
-                        pygame.image.load(
+                        image_load(
                             f"resources/images/fav_marker.png").convert_alpha(),
                         (100, 100))
 

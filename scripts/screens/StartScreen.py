@@ -32,6 +32,7 @@ from .Screens import Screens
 from ..housekeeping.datadir import get_data_dir, get_cache_dir
 from ..housekeeping.update import has_update, UpdateChannel, get_latest_version_number
 from ..housekeeping.version import get_version_info
+from scripts.file_loader import image_load
 
 logger = logging.getLogger(__name__)
 has_checked_for_update = False
@@ -45,7 +46,7 @@ class StartScreen(Screens):
     def __init__(self, name=None):
         super().__init__(name)
         self.warning_label = None
-        self.bg = pygame.image.load("resources/images/menu.png").convert()
+        self.bg = image_load("resources/images/menu.png").convert()
         self.bg = pygame.transform.scale(self.bg, (screen_x, screen_y))
         self.social_buttons = {}
 

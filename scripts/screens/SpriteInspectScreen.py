@@ -11,6 +11,7 @@ from scripts.cat.cats import Cat
 import pygame_gui
 from scripts.game_structure.image_button import UIImageButton, UITextBoxTweaked
 from scripts.game_structure.game_essentials import game, MANAGER
+from scripts.file_loader import image_load
 
 
 class SpriteInspectScreen(Screens):
@@ -451,7 +452,7 @@ class SpriteInspectScreen(Screens):
 
         biome = biome.lower()
 
-        platformsheet = pygame.image.load('resources/images/platforms.png').convert_alpha()
+        platformsheet = image_load('resources/images/platforms.png').convert_alpha()
         
         order = ['beach', 'forest', 'mountainous', 'nest', 'plains', 'SC/DF']
         

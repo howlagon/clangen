@@ -3,6 +3,7 @@ import pygame
 import ujson
 
 from scripts.game_structure.game_essentials import game
+from scripts.file_loader import image_load
 
 class Sprites():
     cat_tints = {}
@@ -44,7 +45,7 @@ class Sprites():
         a_file -- Path to the file to create a spritesheet from.
         name -- Name to call the new spritesheet.
         """
-        self.spritesheets[name] = pygame.image.load(a_file).convert_alpha()
+        self.spritesheets[name] = image_load(a_file).convert_alpha()
 
     def make_group(self,
                    spritesheet,
@@ -92,7 +93,7 @@ class Sprites():
 
     def load_all(self):
         # get the width and height of the spritesheet
-        lineart = pygame.image.load('sprites/lineart.png')
+        lineart = image_load('sprites/lineart.png')
         width, height = lineart.get_size()
         del lineart # unneeded
 

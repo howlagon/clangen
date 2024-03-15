@@ -24,6 +24,8 @@ from scripts.cat.pelts import Pelt
 from scripts.cat_relations.relationship import Relationship
 from scripts.clan_resources.freshkill import ADDITIONAL_PREY, PREY_REQUIREMENT, HUNTER_EXP_BONUS, HUNTER_BONUS, \
     FRESHKILL_ACTIVE
+from scripts.file_loader import image_load
+
 
 
 
@@ -297,7 +299,7 @@ class PatrolOutcome():
         if not isinstance(file_name, str) or not path_exists(f"{root_dir}{file_name}.png"):
             return None
             
-        return pygame.image.load(f"{root_dir}{file_name}.png")
+        return image_load(f"{root_dir}{file_name}.png")
         
     # ---------------------------------------------------------------------------- #
     #                                   HANDLERS                                   #

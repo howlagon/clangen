@@ -24,6 +24,7 @@ from re import sub
 from scripts.game_structure.image_button import UIImageButton, UITextBoxTweaked
 from scripts.game_structure.game_essentials import game, MANAGER
 from scripts.clan_resources.freshkill import FRESHKILL_ACTIVE
+from scripts.file_loader import image_load
 
 
 # ---------------------------------------------------------------------------- #
@@ -2050,7 +2051,7 @@ class ProfileScreen(Screens):
 
         biome = biome.lower()
 
-        platformsheet = pygame.image.load('resources/images/platforms.png').convert_alpha()
+        platformsheet = image_load('resources/images/platforms.png').convert_alpha()
 
         order = ['beach', 'forest', 'mountainous', 'nest', 'plains', 'SC/DF']
 

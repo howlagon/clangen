@@ -8,6 +8,7 @@ from scripts.events_module.freshkill_pile_events import Freshkill_Events
 from scripts.game_structure.image_button import UISpriteButton, UIImageButton, UITextBoxTweaked
 from scripts.utility import get_text_box_theme, scale, shorten_text_to_fit
 from scripts.game_structure.game_essentials import game, screen_x, screen_y, MANAGER
+from scripts.file_loader import image_load
 
 with open('resources/clansettings.json', 'r', encoding='utf-8') as f:
     settings_dict = ujson.load(f)
@@ -227,7 +228,7 @@ class ClearingScreen(Screens):
         self.tactic_title.hide()
         self.cat_bg = pygame_gui.elements.UIImage(scale(pygame.Rect
                                                         ((280, 880), (1120, 400))),
-                                                  pygame.image.load(
+                                                  image_load(
                                                       "resources/images/sick_hurt_bg.png").convert_alpha()
                                                   , manager=MANAGER)
         self.cat_bg.disable()

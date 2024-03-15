@@ -9,18 +9,19 @@ from scripts.patrol.patrol import Patrol
 from scripts.cat.cats import Cat
 from scripts.game_structure.game_essentials import game, MANAGER
 from scripts.game_structure.propagating_thread import PropagatingThread
+from scripts.file_loader import image_load
 
 
 class PatrolScreen(Screens):
-    able_box = pygame.transform.scale(pygame.image.load("resources/images/patrol_able_cats.png").convert_alpha(),
+    able_box = pygame.transform.scale(image_load("resources/images/patrol_able_cats.png").convert_alpha(),
                                       (540, 402))
-    patrol_box = pygame.transform.scale(pygame.image.load("resources/images/patrol_cats.png").convert_alpha(),
+    patrol_box = pygame.transform.scale(image_load("resources/images/patrol_cats.png").convert_alpha(),
                                         (540, 402))
-    cat_frame = pygame.transform.scale(pygame.image.load("resources/images/patrol_cat_frame.png").convert_alpha(),
+    cat_frame = pygame.transform.scale(image_load("resources/images/patrol_cat_frame.png").convert_alpha(),
                                        (400, 550))
-    app_frame = pygame.transform.scale(pygame.image.load("resources/images/patrol_app_frame.png").convert_alpha(),
+    app_frame = pygame.transform.scale(image_load("resources/images/patrol_app_frame.png").convert_alpha(),
                                        (332, 340))
-    mate_frame = pygame.transform.scale(pygame.image.load("resources/images/patrol_mate_frame.png").convert_alpha(),
+    mate_frame = pygame.transform.scale(image_load("resources/images/patrol_mate_frame.png").convert_alpha(),
                                         (332, 340))
 
     current_patrol = []
@@ -376,7 +377,7 @@ class PatrolScreen(Screens):
             'Smaller patrols help cats gain more experience, but larger patrols are safer.',
             scale(pygame.Rect((375, 190), (850, 200))), object_id=get_text_box_theme("#text_box_22_horizcenter"))
         self.elements["cat_frame"] = pygame_gui.elements.UIImage(scale(pygame.Rect((600, 330), (400, 550))),
-                                                                 pygame.image.load(
+                                                                 image_load(
                                                                      "resources/images/patrol_cat_frame.png").convert_alpha()
                                                                  , manager=MANAGER)
 
@@ -496,20 +497,20 @@ class PatrolScreen(Screens):
         # Layout images
         self.elements['event_bg'] = pygame_gui.elements.UIImage(scale(pygame.Rect((762, 330), (708, 540))),
                                                                 pygame.transform.scale(
-                                                                    pygame.image.load(
+                                                                    image_load(
                                                                         "resources/images/patrol_event_frame.png").convert_alpha(),
                                                                     (708, 540)
                                                                 ), manager=MANAGER)
         self.elements['event_bg'].disable()
         self.elements['info_bg'] = pygame_gui.elements.UIImage(scale(pygame.Rect((180, 912), (840, 408))),
                                                                pygame.transform.scale(
-                                                                   pygame.image.load(
+                                                                   image_load(
                                                                        "resources/images/patrol_info.png").convert_alpha(),
                                                                    (840, 408)
                                                                ), manager=MANAGER)
         self.elements['image_frame'] = pygame_gui.elements.UIImage(scale(pygame.Rect((130, 280), (640, 640))),
                                                                    pygame.transform.scale(
-                                                                       pygame.image.load(
+                                                                       image_load(
                                                                            "resources/images/patrol_sprite_frame.png").convert_alpha(),
                                                                        (640, 640)
                                                                    ), manager=MANAGER) 
@@ -684,7 +685,7 @@ class PatrolScreen(Screens):
                 self.fav[str(i)] = pygame_gui.elements.UIImage(
                     scale(pygame.Rect((pos_x, pos_y), (100, 100))),
                     pygame.transform.scale(
-                        pygame.image.load(
+                        image_load(
                             f"resources/images/fav_marker.png").convert_alpha(),
                         (100, 100))
                 )

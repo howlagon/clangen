@@ -12,6 +12,7 @@ from scripts.utility import scale
 from scripts.game_structure import image_cache
 from scripts.game_structure.game_essentials import game, screen, screen_x, screen_y
 from scripts.game_structure.windows import SaveError
+from scripts.file_loader import image_load
 
 
 class ClanScreen(Screens):
@@ -268,13 +269,13 @@ class ClanScreen(Screens):
             all_backgrounds.append(platform_dir)
 
         self.newleaf_bg = pygame.transform.scale(
-            pygame.image.load(all_backgrounds[0]).convert(), (screen_x, screen_y))
+            image_load(all_backgrounds[0]).convert(), (screen_x, screen_y))
         self.greenleaf_bg = pygame.transform.scale(
-            pygame.image.load(all_backgrounds[1]).convert(), (screen_x, screen_y))
+            image_load(all_backgrounds[1]).convert(), (screen_x, screen_y))
         self.leafbare_bg = pygame.transform.scale(
-            pygame.image.load(all_backgrounds[2]).convert(), (screen_x, screen_y))
+            image_load(all_backgrounds[2]).convert(), (screen_x, screen_y))
         self.leaffall_bg = pygame.transform.scale(
-            pygame.image.load(all_backgrounds[3]).convert(), (screen_x, screen_y))
+            image_load(all_backgrounds[3]).convert(), (screen_x, screen_y))
 
     def choose_nonoverlapping_positions(self, first_choices, dens, weights=None):
         if not weights:

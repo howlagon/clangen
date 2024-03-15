@@ -4,6 +4,7 @@ from scripts.debug_commands.settings import ToggleCommand, SetCommand, GetComman
 from scripts.debug_commands.eval import EvalCommand
 from scripts.debug_commands.fps import FpsCommand
 from scripts.debug_commands.cat import CatsCommand
+from scripts.debug_commands.mods import ModsCommand
 from typing import List
 
 commandList: List[Command] = [
@@ -12,7 +13,8 @@ commandList: List[Command] = [
     GetCommand(),
     EvalCommand(),
     FpsCommand(),
-    CatsCommand()
+    CatsCommand(),
+    ModsCommand()
 ]
 
 helpCommand = HelpCommand(commandList)

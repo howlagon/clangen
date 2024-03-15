@@ -13,6 +13,7 @@ from scripts.game_structure import image_cache
 import pygame_gui
 from scripts.game_structure.image_button import UIImageButton, UITextBoxTweaked
 from scripts.game_structure.game_essentials import game, screen_x, screen_y, MANAGER
+from scripts.file_loader import image_load
 
 
 class RoleScreen(Screens):
@@ -103,7 +104,7 @@ class RoleScreen(Screens):
         self.blurb_background = pygame_gui.elements.UIImage(scale(pygame.Rect
                                                                   ((100, 390), (1400, 300))),
                                                             pygame.transform.scale(
-                                                                pygame.image.load(
+                                                                image_load(
                                                                     "resources/images/mediation_selection_bg.png").convert_alpha(),
                                                                 (1400, 300))
                                                             )

@@ -1,0 +1,95 @@
+"""Handles file loading and redirection for modded files."""
+import builtins
+import io
+import pygame
+import ujson
+from pathlib import Path
+
+def _deep_merge(dict1: dict, dict2: dict) -> dict:
+  """Deeply merges two dictionaries, overwriting values in dict1."""
+  merged = dict1.copy()
+  for key, value in dict2.items():
+    if key in dict1:
+      if isinstance(value, dict) and isinstance(dict1[key], dict):
+        merged[key] = _deep_merge(dict1[key], value)
+      else:
+        merged[key] = value
+    else:
+      merged[key] = value
+  return merged
+
+def _extend_json(old_path: str, new_path: str) -> io.StringIO:
+    """Merges two json files together, removing duplicates and returning the merged item."""
+    old_json = ujson.load(Path(old_path).open())
+    new_json = ujson.load(Path(new_path).open())
+    if isinstance(old_json, list) and isinstance(new_json, list):
+        extended_json = list({d["patrol_id"]: d for d in old_json + new_json}.values())
+    elif isinstance(old_json, dict) and isinstance(new_json, dict):
+        extended_json = _deep_merge(new_json, old_json)
+    else: 
+        raise ValueError("Both files must be of the same type (list or dict).")
+
+    return io.StringIO(ujson.dumps(extended_json))
+
+class _FileHandler:
+    enabled = True
+    lookup_table = {}
+    @classmethod
+    def load_file(cls, file, mode='r', buffering=-1, encoding=None, errors=None, newline=None) -> io.TextIOWrapper:
+        """Reimplementation of the builtin open function that uses the lookup table to redirect file paths.
+        https://docs.python.org/3/library/functions.html#open
+
+        Returns:
+            io.TextIOWrapper
+        """
+        file = file.replace("\\", "/")
+        if file in cls.lookup_table.keys():
+            if file.endswith(".json") and cls.lookup_table[file]["extend"]:
+                return _extend_json(cls.lookup_table[file]["file"], file)
+            file = cls.lookup_table[file]["file"]
+        return Path(file).open(mode, buffering, encoding, errors, newline)
+    
+    @classmethod
+    def change_binding(cls, original: str, new: str, extend=False):
+        """Changes the binding of a file to a new file, and whether or not it should be merged with the other."""
+        original = original.replace("\\", "/")
+        new = new.replace("\\", "/")
+        cls.lookup_table[original] = {
+            "file": new,
+            "extend": extend
+        }
+    
+    @classmethod
+    def get_path(cls, file: str) -> str:
+        """Gets the path of a file, replacing it with the modded version if it exists."""
+        if not cls.enabled: 
+            return file
+        file = file.replace("\\", "/")
+        if file in cls.lookup_table.keys():
+            return cls.lookup_table[file]["file"]
+        return file
+
+    @classmethod
+    def toggle(cls):
+        """Toggles the file loader on and off. When off, the original files are loaded. Clears the cache when disabled."""
+        cls.enabled = not cls.enabled
+        if not cls.enabled:
+            from scripts.game_structure.image_cache import clear_cache
+            clear_cache()
+
+def get_path(file: str) -> str:
+    """Gets the path of a file, replacing it with the modded version if it exists."""
+    return _FileHandler.get_path(file)
+
+def image_load(file: str) -> pygame.Surface:
+    """Replacement for pygame.image.load that will replace files if a mod has changed them.
+
+    Args:
+        file (str)
+
+    Returns:
+        pygame.Surface
+    """
+    return pygame.image.load(_FileHandler.get_path(file))
+
+builtins.open = _FileHandler.load_file

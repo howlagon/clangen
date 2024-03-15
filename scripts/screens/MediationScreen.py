@@ -9,6 +9,7 @@ from scripts.cat.cats import Cat
 from scripts.game_structure import image_cache
 from scripts.game_structure.image_button import UIImageButton, UISpriteButton, UIRelationStatusBar
 from scripts.game_structure.game_essentials import game, MANAGER
+from scripts.file_loader import image_load
 
 
 class MediationScreen(Screens):
@@ -128,7 +129,7 @@ class MediationScreen(Screens):
         self.cat_bg = pygame_gui.elements.UIImage(scale(pygame.Rect
                                                         ((100, 940), (1400, 300))),
                                                   pygame.transform.scale(
-                                                      pygame.image.load(
+                                                      image_load(
                                                           "resources/images/mediation_selection_bg.png").convert_alpha(),
                                                       (1400, 300))
                                                   )
@@ -282,7 +283,7 @@ class MediationScreen(Screens):
         for cat in self.all_cats[self.page - 1]:
             if game.clan.clan_settings["show fav"] and cat.favourite:
                 _temp = pygame.transform.scale(
-                            pygame.image.load(
+                            image_load(
                                 f"resources/images/fav_marker.png").convert_alpha(),
                             (100, 100))
                     

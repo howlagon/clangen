@@ -28,6 +28,7 @@ from scripts.housekeeping.update import self_update, UpdateChannel, get_latest_v
 from scripts.utility import scale, quit, update_sprite, scale_dimentions, logger, process_text
 from scripts.game_structure.game_essentials import game, MANAGER
 from scripts.housekeeping.version import get_version_info
+from scripts.file_loader import image_load
 
 
 class SaveCheck(UIWindow):
@@ -1263,7 +1264,7 @@ class EventLoading(UIWindow):
     def load_images():
         frames = []
         for i in range(0, 16):
-            frames.append(pygame.image.load(
+            frames.append(image_load(
                 f"resources/images/loading_animate/timeskip/{i}.png"))
 
         return frames
