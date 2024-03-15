@@ -62,7 +62,7 @@ class _FileHandler:
             io.TextIOWrapper
         """
         if not isinstance(file, str):
-            file = str(file)
+           return Path(file).open(mode, buffering, encoding, errors, newline)
         if file.replace("\\", "/") in cls.memory.keys():
             return cls._load_file_from_memory(file)
         if file.replace("\\", "/") in cls.lookup_table.keys():
