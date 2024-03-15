@@ -31,11 +31,30 @@ def _extend_json(old_path: str, new_path: str) -> io.StringIO:
 
     return io.StringIO(ujson.dumps(extended_json))
 
+def _extend_json_from_memory(old_path: str, new_json: bytes) -> io.StringIO:
+    """Merges two json files together, removing duplicates and returning the merged item."""
+    old_json = ujson.load(Path(old_path).open())
+    new_json = ujson.loads(new_json)
+    if isinstance(old_json, list) and isinstance(new_json, list):
+        extended_json = list({d["patrol_id"]: d for d in old_json + new_json}.values())
+    elif isinstance(old_json, dict) and isinstance(new_json, dict):
+        extended_json = _deep_merge(old_json, new_json)
+    else: 
+        raise ValueError("Both files must be of the same type (list or dict).")
+    return io.StringIO(ujson.dumps(extended_json))
+
 class _FileHandler:
     enabled = True
     lookup_table = {}
+    memory = {}
     @classmethod
-    def load_file(cls, file, mode='r', buffering=-1, encoding=None, errors=None, newline=None) -> io.TextIOWrapper:
+    def _load_file_from_memory(cls, file) -> io.BytesIO:
+        if file.endswith(".json") and cls.memory[file]["extend"]:
+            return _extend_json_from_memory(file, cls.memory[file]["file"])
+        return io.BytesIO(cls.memory[file]["file"])
+
+    @classmethod
+    def load_file(cls, file, mode='r', buffering=-1, encoding=None, errors=None, newline=None) -> io.TextIOWrapper | io.BytesIO:
         """Reimplementation of the builtin open function that uses the lookup table to redirect file paths.
         https://docs.python.org/3/library/functions.html#open
 
@@ -44,18 +63,28 @@ class _FileHandler:
         """
         if not isinstance(file, str):
             file = str(file)
+        if file.replace("\\", "/") in cls.memory.keys():
+            return cls._load_file_from_memory(file)
         if file.replace("\\", "/") in cls.lookup_table.keys():
             if file.endswith(".json") and cls.lookup_table[file.replace("\\", "/")]["extend"]:
                 return _extend_json(cls.lookup_table[file.replace("\\", "/")]["file"], file)
             file = cls.lookup_table[file.replace("\\", "/")]["file"]
         return Path(file.replace("\\", "/")).open(mode, buffering, encoding, errors, newline)
-    
+
     @classmethod
-    def change_binding(cls, original: str, new: str, extend=False):
+    def change_binding(cls, original: str, data: str, extend=False):
         """Changes the binding of a file to a new file, and whether or not it should be merged with the other."""
         original = original.replace("\\", "/")
-        new = new.replace("\\", "/")
         cls.lookup_table[original] = {
+            "file": data,
+            "extend": extend
+        }
+
+    @classmethod
+    def change_binding_in_memory(cls, original: str, new, extend=False) -> None:
+        """Changes the binding of a file to a new file, and whether or not it should be merged with the other."""
+        original = original.replace("\\", "/")
+        cls.memory[original] = {
             "file": new,
             "extend": extend
         }
@@ -91,6 +120,8 @@ def image_load(file: str) -> pygame.Surface:
     Returns:
         pygame.Surface
     """
+    if file in _FileHandler.memory.keys():
+        return pygame.image.load(_FileHandler._load_file_from_memory(file))
     return pygame.image.load(_FileHandler.get_path(file))
 
 builtins.open = _FileHandler.load_file

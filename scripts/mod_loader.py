@@ -1,8 +1,9 @@
-"""Automatically loads all mods from ./mods/*, creates folder if it doesn't exist"""
+"""Automatically creates mod folder (if it doesn't exist) and then loads all mods from ./mods/*.zip"""
 
 import glob
 import os
 import ujson
+import zipfile
 from scripts.file_loader import _FileHandler as FileHandler
 
 if not os.path.exists("mods"):
@@ -10,10 +11,14 @@ if not os.path.exists("mods"):
 
 mod_count = 0
 mods = []
-for mod in glob.glob("mods/*"):
-    if not os.path.exists(f"{mod}/mod.json"): 
+for mod in glob.glob("mods/*.zip"):
+    mod = mod.replace("\\", "/")
+    path = mod.strip("mods/").rstrip('.zip')
+    zip = zipfile.ZipFile(mod)
+    if not path + "/mod.json" in zip.namelist():
         raise FileNotFoundError(f"Mod {mod} is missing mod.json")
-    mod_data: dict = ujson.load(open(f"{mod}/mod.json"))
+    zip_data = {name: zip.read(name) for name in zip.namelist() if not name.endswith("/") and not name.endswith("mod.json")}
+    mod_data: dict = ujson.loads(zip.read(path + "/mod.json"))
     if not all([mod_data.get(key) for key in ["name", "version", "description", "author"]]):
         raise ValueError(f"Mod {mod} is missing adequate data in mod.json. Required fields: name, author, description, version")
 
@@ -21,14 +26,7 @@ for mod in glob.glob("mods/*"):
     mod_count += 1
 
     merge = mod_data.get("merge", False) # in a perfect world, this would be called "merge?"
-    # grab every single file in the mod folder, and change the binding of the old file to the modded version
-    files = []
-    for folder in ["sprites", "resources"]:
-        files.extend(glob.glob(f"{mod}/{folder}/**/*", recursive=True))
-    for file in files:
+    for file in zip_data:
         if file.endswith("mod.json"): continue
-        if os.path.isdir(file): continue
-
-        orig_file = file.replace(mod, "").lstrip("\\").lstrip("/")
-        is_merged = merge and orig_file.replace("\\", "/") in mod_data.get("merge", [])
-        FileHandler.change_binding(orig_file, file, is_merged)
+        is_merged = merge and file.replace(f"{path}/", "") in mod_data.get("merge", [])
+        FileHandler.change_binding_in_memory(file.replace(f"{path}/", ""), zip_data[file], is_merged)
