@@ -13,8 +13,8 @@ mods = []
 for mod in glob.glob("mods/*"):
     if not os.path.exists(f"{mod}/mod.json"): continue
     mod_data: dict = ujson.load(open(f"{mod}/mod.json"))
-    if not mod_data.get("name") or not mod_data.get("version") or not mod_data.get("description"):
-        raise ValueError(f"Mod {mod} is missing adequate data in mod.json. Required fields: name, version, description.")
+    if not all([mod_data.get(key) for key in ["name", "version", "description", "author"]]):
+        raise ValueError(f"Mod {mod} is missing adequate data in mod.json. Required fields: name, author, description, version")
 
     mods.append(mod_data)
     mod_count += 1
