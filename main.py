@@ -166,7 +166,7 @@ from scripts.screens.all_screens import start_screen # pylint: disable=ungrouped
 
 # P Y G A M E
 clock = pygame.time.Clock()
-pygame.display.set_icon(pygame.image.load('resources/images/icon.png'))
+pygame.display.set_icon(image_load('resources/images/icon.png'))
 
 game.rpc = _DiscordRPC("1076277970060185701", daemon=True)
 game.rpc.start()
@@ -210,7 +210,7 @@ def loading_animation():
     
     images = []
     for i in range(1, 11):
-        im = pygame.image.load(f"resources/images/loading_animate/startup/{i}.png")
+        im = image_load(f"resources/images/loading_animate/startup/{i}.png")
         im.blit(color, (0,0), special_flags=pygame.BLEND_RGBA_MULT)
         images.append(im)
         
@@ -262,7 +262,7 @@ start_screen.screen_switches()
 if game.settings['fullscreen']:
     version_number = pygame_gui.elements.UILabel(
         pygame.Rect((1500, 1350), (-1, -1)), get_version_info().version_number[0:8],
-        object_id=get_text_box_theme())
+        object_id="#version_number")
     # Adjust position
     version_number.set_position(
         (1600 - version_number.get_relative_rect()[2] - 8,
@@ -270,7 +270,7 @@ if game.settings['fullscreen']:
 else:
     version_number = pygame_gui.elements.UILabel(
         pygame.Rect((700, 650), (-1, -1)), get_version_info().version_number[0:8],
-        object_id=get_text_box_theme())
+        object_id="#version_number")
     # Adjust position
     version_number.set_position(
         (800 - version_number.get_relative_rect()[2] - 8,
@@ -284,7 +284,7 @@ if get_version_info().is_source_build or get_version_info().is_dev():
     )
 
 
-cursor_img = pygame.image.load('resources/images/cursor.png').convert_alpha()
+cursor_img = image_load('resources/images/cursor.png').convert_alpha()
 cursor = pygame.cursors.Cursor((9,0), cursor_img)
 disabled_cursor = pygame.cursors.Cursor(pygame.SYSTEM_CURSOR_ARROW)
 

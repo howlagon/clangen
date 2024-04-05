@@ -61,10 +61,10 @@ class _FileHandler:
         Returns:
             io.TextIOWrapper | io.BytesIO: just treat this like a file you'll be fine
         """
-        if not isinstance(file, str):
-           return Path(file).open(mode, buffering, encoding, errors, newline)
         if file.replace("\\", "/") in cls.memory.keys():
             return cls._load_file_from_memory(file)
+        if not isinstance(file, str):
+           return Path(file).open(mode, buffering, encoding, errors, newline)
         if file.replace("\\", "/") in cls.lookup_table.keys():
             if file.endswith(".json") and cls.lookup_table[file.replace("\\", "/")]["extend"]:
                 return _extend_json(cls.lookup_table[file.replace("\\", "/")]["file"], file)
@@ -72,7 +72,7 @@ class _FileHandler:
         return Path(file.replace("\\", "/")).open(mode, buffering, encoding, errors, newline)
 
     @classmethod
-    def change_binding(cls, original: str, data: str, extend=False):
+    def change_binding(cls, original: str, data: str, extend: bool = False) -> None:
         """Changes the binding of a file to a new file, and whether or not it should be merged with the other."""
         original = original.replace("\\", "/")
         cls.lookup_table[original] = {
@@ -81,12 +81,16 @@ class _FileHandler:
         }
 
     @classmethod
-    def change_binding_in_memory(cls, original: str, new, extend=False) -> None:
+    def change_binding_in_memory(cls, original: str, new, mod_name: str, extend: bool = False) -> None:
         """Changes the binding of a file to a new file, and whether or not it should be merged with the other."""
         original = original.replace("\\", "/")
+        if original in cls.memory.keys():
+            proper_name = '/'.join(original.split("/")[1:])
+            print(f'Warning: Both "{cls.memory[original].get("mod")}" and "{mod_name}" are trying to modify {proper_name}. Only the latter will be applied.')
         cls.memory[original] = {
             "file": new,
-            "extend": extend
+            "extend": extend,
+            "mod": mod_name
         }
     
     @classmethod
@@ -100,12 +104,22 @@ class _FileHandler:
         return file
 
     @classmethod
-    def toggle(cls):
+    def toggle(cls) -> None:
         """Toggles the file loader on and off. When off, the original files are loaded. Clears the cache when disabled."""
         cls.enabled = not cls.enabled
         if not cls.enabled:
             from scripts.game_structure.image_cache import clear_cache
             clear_cache()
+    
+    @classmethod
+    def clear_memory(cls) -> None:
+        """Clears the memory cache of all loaded files."""
+        cls.memory = {}
+    
+    @classmethod
+    def clear_lookup_table(cls) -> None:
+        """Clears the lookup table of all file bindings."""
+        cls.lookup_table = {}
 
 def get_path(file: str) -> str:
     """Gets the path of a file, replacing it with the modded version if it exists."""

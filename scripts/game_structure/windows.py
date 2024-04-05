@@ -938,6 +938,9 @@ class ChangelogPopup(UIWindow):
             for line in commits:
                 info = line.split("|||")
                                 
+                # Failsafe in case info doesn't exist, for pyinstaller
+                if len(info) < 4: continue
+                
                 # Get PR number so we can link the PR
                 pr_number = re_search(r"Merge pull request #([0-9]*?) ", info[3])
                 if pr_number:

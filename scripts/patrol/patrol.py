@@ -892,7 +892,7 @@ class Patrol():
             
             file_name = f"{file_name}_general_intro"
             
-        return pygame.image.load(f"{root_dir}{file_name}.png")
+        return image_load(f"{root_dir}{file_name}.png")
     
     def process_text(self, text, stat_cat:Cat) -> str:
         """Processes text """
