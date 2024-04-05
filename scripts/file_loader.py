@@ -61,10 +61,10 @@ class _FileHandler:
         Returns:
             io.TextIOWrapper | io.BytesIO: just treat this like a file you'll be fine
         """
-        if file.replace("\\", "/") in cls.memory.keys():
-            return cls._load_file_from_memory(file)
         if not isinstance(file, str):
            return Path(file).open(mode, buffering, encoding, errors, newline)
+        if file.replace("\\", "/") in cls.memory.keys():
+            return cls._load_file_from_memory(file)
         if file.replace("\\", "/") in cls.lookup_table.keys():
             if file.endswith(".json") and cls.lookup_table[file.replace("\\", "/")]["extend"]:
                 return _extend_json(cls.lookup_table[file.replace("\\", "/")]["file"], file)
