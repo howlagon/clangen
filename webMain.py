@@ -1,3 +1,11 @@
+# /// script
+# dependencies = [
+#     "pygame",
+#     "pygame_gui",
+#     "pygbag",
+#     "i18n"
+# ]
+# ///
 """
 Shim for pygbag (web runner) to detect all imports
 """
@@ -5,6 +13,8 @@ Shim for pygbag (web runner) to detect all imports
 from __future__ import print_function
 import pygbag.aio as asyncio
 import builtins
+
+from scripts.web import is_web
 
 builtin_print = builtins.print
 def print(*args, **kwargs):
@@ -28,18 +38,6 @@ random.seed(time.time())
 import i18n
 import pygame
 import shutil
-
-font_mappings = {
-    "NotoSans-Regular.ttf": "FiraCode-Regular.ttf",
-    "NotoSans-Bold.ttf": "FiraCode-Bold.ttf",
-    "NotoSans-Italic.ttf": "FiraCode-RegulatItalic.ttf",
-    "NotoSans-BoldItalic.ttf": "FiraCode-BoldItalic.ttf"
-
-}
-
-for ours, theirs in font_mappings.items():
-    print(f"Replacing {theirs} with {ours}")
-    shutil.copyfile(f"resources/fonts/{ours}", f"/data/data/org.python/assets/build/env/pygame_gui/data/{theirs}")
 
 import pygame_gui
 import platform

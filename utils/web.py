@@ -53,7 +53,7 @@ def pack():
     print(f"Packaged to {zip_path}")
 
 def serve():
-    port = 8000
+    port = 5173
 
     if sys.argv.__contains__("--port"):
         port = int(sys.argv[sys.argv.index("--port") + 1])

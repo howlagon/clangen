@@ -1,8 +1,10 @@
 from pygame_gui.core.text.html_parser import HTMLParser
 from typing import Dict, Optional, Tuple, Union
 
+import json
 import pygame
 import pygame_gui
+import pygame_gui.core.ui_font_dictionary
 from scripts.web import is_web
 from pygame_gui.core.interfaces import IUIManagerInterface, IContainerLikeInterface
 from pygame_gui.core.ui_element import UIElement
@@ -71,6 +73,16 @@ class UITextBox(pygame_gui.elements.UITextBox):
                 plain_text_display_only=plain_text_display_only,
                 should_html_unescape_input_text=should_html_unescape_input_text
             )   
+        # font = pygame_gui.core.ui_font_dictionary.DefaultFontData(14, 'notosans', 'regular', 'resources/fonts/NotoSans-Regular.ttf', 
+        #                         'resources/fonts/NotoSans-Bold.ttf', 'resources/fonts/NotoSans-Italic.ttf', 'resources/fonts/NotoSans-BoldItalic.ttf')
+        # dict = self.ui_theme.get_font_dictionary()
+        # print(dict.known_font_paths)
+        font_info = self.ui_theme.get_font_info(self.parser.combined_ids)
+        print(dir(self.ui_theme))
+        print(self.parser.combined_ids, self.parser.combined_ids[0] in self.ui_theme.ui_element_fonts_info, font_info['name'])
+        self._reparse_and_rebuild()
+        # print("a", list(dict.loaded_fonts.keys()))
+        # print(manager.ui_theme.font_dict.default_font.name)
 
 
 class UITextBoxTweaked(UITextBox):

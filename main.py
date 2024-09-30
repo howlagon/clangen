@@ -1,3 +1,11 @@
+# /// script
+# dependencies = [
+#     "pygame",
+#     "pygame_gui",
+#     "pygbag",
+#     "i18n"
+# ]
+# ///
 #!/usr/bin/env python3
 
 
