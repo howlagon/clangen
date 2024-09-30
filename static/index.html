@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clangen Web</title>
+
+    <script>
+      config = {
+        xtermjs : "1" ,
+        _sdl2 : "canvas",
+        user_canvas : 0,
+        user_canvas_managed : 0,
+        ume_block : 0,
+        can_close : 0,
+        archive : "clangen",
+        gui_debug : 3,
+        cdn : "https://pygame-web.github.io/archives/0.9/",
+        autorun : 1,
+        PYBUILD : "3.11"
+      }
+    </script>
+    <script>
+      if ("serviceWorker" in navigator)
+        navigator.serviceWorker.register("/service-worker.js");
+    </script>
+    <script type="module" crossorigin src="/assets/index-CV4yYuug.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BoAG6EO4.css">
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+</html>

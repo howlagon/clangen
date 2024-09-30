@@ -3,7 +3,7 @@
     "configurations": [
         {
             "name": "Main",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "program": "main.py",
             "console": "integratedTerminal",
@@ -11,11 +11,31 @@
         },
         {
             "name": "Debug",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "program": "main.py",
             "console": "integratedTerminal",
             "justMyCode": false
+        },
+        {
+            "name": "Serve Web",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/utils/web.py",
+            "args": [
+                "serve"],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "Serve Web (No Pack)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/utils/web.py",
+            "args": [
+                "serve", "--no-pack"],
+            "console": "integratedTerminal",
+            "justMyCode": true
         }
     ]
 }

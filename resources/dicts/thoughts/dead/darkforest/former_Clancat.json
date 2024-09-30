@@ -1,8 +1,7 @@
-[
-    {
-        "id": "general_formerclancat_dead_thoughts",
-        "thoughts": [
-            "Is practicing battle moves",
+[{
+    "id": "general_formerclancat_dead_thoughts",
+    "thoughts": [
+        "Is practicing battle moves",
             "Is sharpening {PRONOUN/m_c/poss} claws",
             "Is slinking through the shadows",
             "Is acting suspiciously",
@@ -11,7 +10,7 @@
             "Feels regret for {PRONOUN/m_c/poss} actions",
             "Is reconsidering some of {PRONOUN/m_c/poss} choices in life",
             "Is planning something",
-            "Stalks angrily through the muck",
+            "Angrily stalks through the muck",
             "Is lashing {PRONOUN/m_c/poss} tail while thinking of those still living",
             "Is fighting with another member of the Dark Forest",
             "Wishes {PRONOUN/m_c/subject} could hurt those who have wronged {PRONOUN/m_c/object}",
@@ -56,5 +55,4 @@
     "main_status_constraint": [
         "former Clancat"
     ]
-    }
-]
+}]
