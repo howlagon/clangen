@@ -628,8 +628,8 @@ def load_manager(res: tuple):
     else:
         manager.get_theme().load_theme(f'resources/theme/{"web_" if web.is_web else ""}defaults_small.json')
         manager.get_theme().load_theme(f'resources/theme/{"web_" if web.is_web else ""}buttons_small.json')
-        manager.get_theme().load_theme(f'resources/theme/text_boxes_small.json')
-        manager.get_theme().load_theme(f'resources/theme/text_boxes_dark_small.json')
+        manager.get_theme().load_theme(f'resources/theme/{"web_" if web.is_web else ""}text_boxes_small.json')
+        manager.get_theme().load_theme(f'resources/theme/{"web_" if web.is_web else ""}text_boxes_dark_small.json')
         manager.get_theme().load_theme(f'resources/theme/{"web_" if web.is_web else ""}vertical_scroll_bar.json')
         manager.get_theme().load_theme(f'resources/theme/{"web_" if web.is_web else ""}window_base_small.json')
         manager.get_theme().load_theme(f'resources/theme/{"web_" if web.is_web else ""}tool_tips_small.json')
