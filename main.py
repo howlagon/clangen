@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 # /// script
 # dependencies = [
-#     "python-i18n",
 #     "pgpy",
 #     "platformdirs",
 #     "pygame-ce",
-#     "pygame",
+#     "python-i18n",
 #     "pygame-gui",
 #     "pygbag",
 #     "requests",
