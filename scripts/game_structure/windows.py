@@ -50,6 +50,7 @@ from scripts.utility import (
     ui_scale_dimensions,
     ui_scale_offset,
 )
+from scripts.web import is_web
 
 if TYPE_CHECKING:
     from scripts.screens.Screens import Screens
@@ -1504,6 +1505,7 @@ class ChangelogPopup(UIWindow):
             get_version_info().is_dev()
             and get_version_info().is_source_build
             and get_version_info().git_installed
+            and not is_web
         ):
             file_cont = subprocess.check_output(
                 [
