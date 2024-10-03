@@ -1,6 +1,6 @@
 {
-  "menu_playlist": ["resources/audio/music/Menu_Ambiance.mp3"],
-  "creation_playlist": ["resources/audio/music/Clangen_Generations_441khz.mp3"],
+  "menu_playlist": ["resources/audio/music/Menu_Ambiance.ogg"],
+  "creation_playlist": ["resources/audio/music/Clangen_Generations_441khz.ogg"],
   "forest_playlist": [],
   "plains_playlist": [],
   "beach_playlist": [],
