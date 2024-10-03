@@ -7,6 +7,8 @@ from importlib.util import find_spec
 
 from platformdirs import user_data_dir
 
+from scripts.web import is_web
+
 logger = logging.getLogger(__name__)
 
 VERSION_NAME = "0.9.0"
@@ -37,7 +39,7 @@ def get_version_info():
             version_number = version_ini.get("DEFAULT", "version_number")
             release_channel = version_ini.get("DEFAULT", "release_channel")
             upstream = version_ini.get("DEFAULT", "upstream")
-        else:
+        elif not is_web:
             try:
                 version_number = (
                     subprocess.check_output(["git", "rev-parse", "HEAD"])
