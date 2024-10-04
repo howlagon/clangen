@@ -25,3 +25,23 @@ builtins.print = print
 
 builtin_import = builtins.__import__
 builtins.__import__ = _import
+
+def mean(data):
+    """Return the sample arithmetic mean of data."""
+    n = len(data)
+    if n < 1:
+        raise ValueError('mean requires at least one data point')
+    return sum(data)/n
+
+def median(data):
+    """Return the median of the data."""
+    data = sorted(data)
+    n = len(data)
+    if n == 0:
+        raise ValueError('median requires at least one data point')
+    if n % 2 == 1:
+        return data[n//2]
+    else:
+        i = n//2
+        return (data[i - 1] + data[i])/2
+    

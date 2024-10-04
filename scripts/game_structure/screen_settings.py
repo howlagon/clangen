@@ -13,6 +13,7 @@ import pygame_gui
 
 from scripts.game_structure.ui_manager import UIManager
 from scripts.ui.generate_screen_scale_json import generate_screen_scale
+from scripts.web import is_web
 
 
 offset = (0, 0)
@@ -151,7 +152,7 @@ def set_display_mode(
         new_screen.display_change_load(curr_variable_dict)
 
     # preloading the associated fonts
-    if not MANAGER.ui_theme.get_font_dictionary().check_font_preloaded(
+    if is_web or not MANAGER.ui_theme.get_font_dictionary().check_font_preloaded(
         f"notosans_bold_aa_{floor(11 * screen_scale)}"
     ):
         MANAGER.preload_fonts(

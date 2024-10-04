@@ -10,7 +10,6 @@ TODO: Docs
 
 import os
 import random
-import statistics
 from random import choice, randint
 
 import pygame
@@ -30,7 +29,11 @@ from scripts.utility import (
     quit,
     clan_symbol_sprite,
 )  # pylint: disable=redefined-builtin
-
+from scripts.web import is_web
+if not is_web:
+    import statistics
+else:
+    import scripts.web as statistics
 
 class Clan:
     """

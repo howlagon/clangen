@@ -21,7 +21,6 @@ from html import escape
 import pygame
 import pygame_gui
 from pygame_gui.core import ObjectID
-from requests.exceptions import RequestException, Timeout
 
 from scripts.cat.cats import Cat
 from scripts.game_structure import image_cache
@@ -32,12 +31,16 @@ from scripts.game_structure.game_essentials import (
 from scripts.game_structure.ui_elements import UIImageButton, UISurfaceImageButton
 from scripts.game_structure.windows import UpdateAvailablePopup, ChangelogPopup
 from scripts.utility import ui_scale, quit, ui_scale_dimensions
+from scripts.web import is_web
 from .Screens import Screens
 from ..game_structure.screen_settings import MANAGER
 from ..housekeeping.datadir import get_data_dir, get_cache_dir
 from ..housekeeping.update import has_update, UpdateChannel, get_latest_version_number
 from ..housekeeping.version import get_version_info
 from ..ui.generate_button import get_button_dict, ButtonStyles
+
+if not is_web:
+    from requests.exceptions import RequestException, Timeout
 
 logger = logging.getLogger(__name__)
 has_checked_for_update = False

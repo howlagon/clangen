@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # /// script
 # dependencies = [
+#     "cryptography",
 #     "pgpy",
 #     "platformdirs",
 #     "pygame-ce",
@@ -386,4 +387,5 @@ async def main():
 
         pygame.display.update()
 
-asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(main())
