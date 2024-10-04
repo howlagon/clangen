@@ -9,14 +9,17 @@ import time
 import urllib.parse
 import zipfile
 
-import pgpy
-import requests
-from requests import Response
 from strenum import StrEnum
 
 from scripts.housekeeping.progress_bar_updater import UIUpdateProgressBar
 from scripts.housekeeping.version import get_version_info
 from scripts.utility import quit
+from scripts.web import is_web
+
+if not is_web:
+    import requests
+    from requests import Response
+    import pgpy
 
 use_proxy = False  # Set this to True if you want to use a proxy for the update check. Useful for debugging.
 
@@ -43,7 +46,7 @@ def get_timeout() -> int:
     return 15
 
 
-def configured_get_request(url: str, stream: bool = False) -> Response:
+def configured_get_request(url: str, stream: bool = False):
     return requests.get(
         url,
         stream=stream,

@@ -14,6 +14,8 @@ from scripts.debug_commands.utils import set_debug_class
 from scripts.game_structure.game_essentials import game
 from scripts.game_structure.screen_settings import MANAGER
 from scripts.utility import get_text_box_theme
+from scripts.web import is_web
+from pygame_gui.core.utility import get_default_manager, set_default_manager
 
 
 class debugConsole(pygame_gui.windows.UIConsoleWindow):
@@ -106,11 +108,21 @@ class debugMode:
         self.rebuild_console()
 
     def rebuild_console(self):
+        set_default_manager(MANAGER)
+        print(f"{MANAGER=}\n" + f"{get_default_manager()=}\n" + f"{get_default_manager().ui_theme.font_dict.get_default_font()=}")
+        print(f"{get_default_manager().ui_theme._locale=}")
+        dmg = get_default_manager()
+        font = get_default_manager().ui_theme.ele_font_res['label'][get_default_manager().ui_theme._locale]
+        print(f"\n{font.font_id=}\n" + f"{font.location=}\n" + f"{font.loaded_font=}\n")
         self.coords_display = pygame_gui.elements.UILabel(
             pygame.Rect((0, 0), (-1, -1)),
             "(0, 0)",
             object_id=get_text_box_theme(),
         )
+        print(f"{get_text_box_theme()=}")
+        print(f"{self.coords_display.font=}")
+        print(f"{self.coords_display.ui_theme.get_font(self.coords_display.combined_element_ids)=}")
+        print(f"{self.coords_display.combined_element_ids=}")
 
         self.coords_display.change_layer(9000)
         self.coords_display.text_colour = (255, 0, 0)
@@ -196,6 +208,5 @@ class debugMode:
                     pygame.draw.rect(screen, (0, 255, 0), rect, 1)
                 else:
                     pygame.draw.rect(screen, (255, 0, 0), rect, 1)
-
 
 debugmode = debugMode()
