@@ -199,9 +199,10 @@ async def main():
     clock = pygame.time.Clock()
     pygame.display.set_icon(pygame.image.load("resources/images/icon.png"))
 
-    game.rpc = _DiscordRPC("1076277970060185701", daemon=True)
-    game.rpc.start()
-    game.rpc.start_rpc.set()
+    if not is_web:
+        game.rpc = _DiscordRPC("1076277970060185701", daemon=True)
+        game.rpc.start()
+        game.rpc.start_rpc.set()
 
     # LOAD cats & clan
 
