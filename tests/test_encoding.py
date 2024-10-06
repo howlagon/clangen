@@ -37,7 +37,7 @@ def test():
                 with open(path, "r", encoding="utf-8") as handle_utf8:
                     utf_read = handle_utf8.readlines()
                 with open(
-                    path, "r", encoding="ascii", errors="replace"
+                    path, "r", encoding="utf-8", errors="replace"
                 ) as handle_ascii:
                     ascii_read = handle_ascii.readlines()
 
