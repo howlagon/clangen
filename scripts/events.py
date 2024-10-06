@@ -1231,7 +1231,7 @@ class Events:
 
     def load_war_resources(self):
         resource_dir = "resources/dicts/events/"
-        with open(f"{resource_dir}war.json", encoding="ascii") as read_file:
+        with open(f"{resource_dir}war.json", encoding="utf-8") as read_file:
             self.WAR_TXT = ujson.loads(read_file.read())
 
     def check_war(self):
@@ -1604,7 +1604,7 @@ class Events:
             return
 
         resource_dir = "resources/dicts/events/ceremonies/"
-        with open(f"{resource_dir}ceremony-master.json", encoding="ascii") as read_file:
+        with open(f"{resource_dir}ceremony-master.json", encoding="utf-8") as read_file:
             self.CEREMONY_TXT = ujson.loads(read_file.read())
 
         self.ceremony_id_by_tag = {}
@@ -1809,7 +1809,7 @@ class Events:
         if promoted_to in ["warrior", "mediator", "medicine cat"]:
             resource_dir = "resources/dicts/events/ceremonies/"
             with open(
-                f"{resource_dir}ceremony_traits.json", encoding="ascii"
+                f"{resource_dir}ceremony_traits.json", encoding="utf-8"
             ) as read_file:
                 TRAITS = ujson.loads(read_file.read())
             try:
