@@ -85,6 +85,7 @@ class MusicManager:
         set loops to -1 to loop the chosen file
         setting loops to number above zero will play the track that number of times before playing the queued track
         """
+        print("play_playlist called")
         self.current_playlist = playlist
         self.queued_track = None  # clear queue
 
@@ -141,6 +142,7 @@ class MusicManager:
         """
         Plays the currently queued track then queues the next track
         """
+        print("play_queued called")
         if not self.queued_track:
             return
 
