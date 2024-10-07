@@ -51,7 +51,7 @@ class MusicManager:
         # print(f"menu playlist is {self.playlists['menu_playlist']}")
 
         # menu screen
-        old_playlist = self.current_playlist
+        print(self.current_playlist)
         if (
             screen in menu_screens
             and self.current_playlist != self.playlists["menu_playlist"]
@@ -78,7 +78,6 @@ class MusicManager:
             # print("biome screen")
             self.fade_out_music()
             self.play_playlist(self.biome_playlist)
-        print(old_playlist, "\n", self.current_playlist)
 
     def play_playlist(self, playlist):
         """
