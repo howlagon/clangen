@@ -306,6 +306,9 @@ async def main():
     cursor = pygame.cursors.Cursor((9, 0), cursor_img)
     disabled_cursor = pygame.cursors.Cursor(pygame.SYSTEM_CURSOR_ARROW)
 
+    if is_web:
+        music_manager.muted = True
+
     while 1:
         time_delta = clock.tick(game.switches["fps"]) / 1000.0
         await asyncio.sleep(0)
