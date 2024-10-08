@@ -51,7 +51,6 @@ class MusicManager:
         # print(f"menu playlist is {self.playlists['menu_playlist']}")
 
         # menu screen
-        print(self.current_playlist)
         if (
             screen in menu_screens
             and self.current_playlist != self.playlists["menu_playlist"]
@@ -85,7 +84,6 @@ class MusicManager:
         set loops to -1 to loop the chosen file
         setting loops to number above zero will play the track that number of times before playing the queued track
         """
-        print("play_playlist called")
         self.current_playlist = playlist
         self.queued_track = None  # clear queue
 
@@ -142,7 +140,6 @@ class MusicManager:
         """
         Plays the currently queued track then queues the next track
         """
-        print("play_queued called")
         if not self.queued_track:
             return
 

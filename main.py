@@ -199,10 +199,9 @@ async def main():
     clock = pygame.time.Clock()
     pygame.display.set_icon(pygame.image.load("resources/images/icon.png"))
 
-    if not is_web:
-        game.rpc = _DiscordRPC("1076277970060185701", daemon=True)
-        game.rpc.start()
-        game.rpc.start_rpc.set()
+    game.rpc = _DiscordRPC("1076277970060185701", daemon=True)
+    game.rpc.start()
+    game.rpc.start_rpc.set()
 
     # LOAD cats & clan
 
@@ -228,7 +227,6 @@ async def main():
                         "error_message"
                     ] = "There was an error loading the cats file!"
                     game.switches["traceback"] = e
-
         finished_loading = True
 
 
@@ -282,7 +280,9 @@ async def main():
 
             pygame.display.update()
 
-    if not is_web:
+    if is_web:
+        load_data()
+    else:
         loading_thread = threading.Thread(target=load_data)
         loading_thread.start()
 
@@ -305,9 +305,6 @@ async def main():
     cursor_img = pygame.image.load("resources/images/cursor.png").convert_alpha()
     cursor = pygame.cursors.Cursor((9, 0), cursor_img)
     disabled_cursor = pygame.cursors.Cursor(pygame.SYSTEM_CURSOR_ARROW)
-
-    if is_web:
-        music_manager.muted = True
 
     while 1:
         time_delta = clock.tick(game.switches["fps"]) / 1000.0
@@ -379,7 +376,7 @@ async def main():
             game.all_screens[game.last_screen_forupdate].exit_screen()
             game.all_screens[game.current_screen].screen_switches()
             game.switch_screens = False
-        if not pygame.mixer.music.get_busy() and not game.settings["audio_mute"]:
+        if not is_web and not pygame.mixer.music.get_busy() and not game.settings["audio_mute"]:
             music_manager.play_queued()
 
         debugmode.update1(clock)
@@ -392,4 +389,4 @@ async def main():
         pygame.display.update()
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(main(), debug=True)

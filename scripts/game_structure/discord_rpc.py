@@ -12,6 +12,7 @@ import threading
 from time import time
 
 from scripts.game_structure.game_essentials import game
+from scripts.web import is_web
 
 status_dict = {
     "start screen": "At the start screen",
@@ -35,10 +36,14 @@ class _DiscordRPC(threading.Thread):
         self._start_time = round(time() * 1000)
         self._rpc_supported = False
         self._event_loop = asyncio.new_event_loop()
-
-        self.start_rpc = threading.Event()
-        self.update_rpc = threading.Event()
-        self.close_rpc = threading.Event()
+        if not is_web:
+            self.start_rpc = threading.Event()
+            self.update_rpc = threading.Event()
+            self.close_rpc = threading.Event()
+        else:
+            self.start_rpc = DummyRPC()
+            self.update_rpc = DummyRPC()
+            self.close_rpc = DummyRPC()
 
     def run(self):
         self.start_rpc.wait()
@@ -51,7 +56,7 @@ class _DiscordRPC(threading.Thread):
 
     def get_rpc(self):
         # Check if pypresence is available.
-        if not game.settings["discord"]:
+        if not game.settings["discord"] or is_web:
             return
         try:
             # raise ImportError # uncomment this line to disable rpc without uninstalling pypresence
@@ -142,3 +147,19 @@ class _DiscordRPC(threading.Thread):
         if self._connected:
             self._rpc.close()
             self._connected = False
+
+class DummyRPC:
+    def __init__(self, *args, **kwargs):
+        pass
+
+    def wait(self):
+        pass
+
+    def clear(self):
+        pass
+
+    def set(self):
+        pass
+
+    def is_set(self):
+        return True

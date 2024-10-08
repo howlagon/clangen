@@ -240,7 +240,6 @@ class Screens:
     @classmethod
     def show_mute_buttons(cls):
         """This shows all mute buttons, and makes them interact-able."""
-
         if music_manager.muted:
             cls.menu_buttons["unmute_button"].show()
             cls.menu_buttons["mute_button"].hide()
