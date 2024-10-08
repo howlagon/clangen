@@ -16,6 +16,7 @@ from scripts.game_structure.ui_elements import (
     UIImageHorizontalSlider,
 )
 from scripts.utility import get_text_box_theme, ui_scale, ui_scale_dimensions
+from scripts.web import is_web
 from .Screens import Screens
 from ..game_structure.audio import music_manager, sound_manager
 from ..game_structure.screen_settings import (
@@ -458,6 +459,9 @@ class SettingsScreen(Screens):
                 "left_target": self.volume_elements["sound_volume_slider"],
             },
         )
+
+        if is_web:
+            self.volume_elements["music_volume_slider"].disable()
 
     def update_music_volume_indicator(self):
         self.volume_elements["music_volume_indicator"].set_text(
