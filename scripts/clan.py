@@ -31,9 +31,9 @@ from scripts.utility import (
 )  # pylint: disable=redefined-builtin
 from scripts.web import is_web
 if not is_web:
-    import statistics
+    from statistics import mean, median
 else:
-    import scripts.web as statistics
+    from scripts.web import mean, median
 
 class Clan:
     """
@@ -1203,37 +1203,37 @@ class Clan:
         if (leader or deputy) and all_cats:
             clan_sociability = round(
                 weight
-                * statistics.mean(
+                * mean(
                     [i.personality.sociability for i in [leader, deputy] if i]
                 )
                 + (1 - weight)
-                * statistics.median([i.personality.sociability for i in all_cats])
+                * median([i.personality.sociability for i in all_cats])
             )
             clan_aggression = round(
                 weight
-                * statistics.mean(
+                * mean(
                     [i.personality.aggression for i in [leader, deputy] if i]
                 )
                 + (1 - weight)
-                * statistics.median([i.personality.aggression for i in all_cats])
+                * median([i.personality.aggression for i in all_cats])
             )
         elif leader or deputy:
             clan_sociability = round(
-                statistics.mean(
+                mean(
                     [i.personality.sociability for i in [leader, deputy] if i]
                 )
             )
             clan_aggression = round(
-                statistics.mean(
+                mean(
                     [i.personality.aggression for i in [leader, deputy] if i]
                 )
             )
         elif all_cats:
             clan_sociability = round(
-                statistics.median([i.personality.sociability for i in all_cats])
+                median([i.personality.sociability for i in all_cats])
             )
             clan_aggression = round(
-                statistics.median([i.personality.aggression for i in all_cats])
+                median([i.personality.aggression for i in all_cats])
             )
         else:
             print("returned default temper: stoic")
