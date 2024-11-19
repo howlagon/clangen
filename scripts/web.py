@@ -5,9 +5,10 @@ import platform
 import shutil
 import sys
 
-from scripts.housekeeping.datadir import get_data_dir, get_save_dir
-
 is_web: bool = sys.platform.lower() == 'emscripten'
+
+from scripts.housekeeping.datadir import get_data_dir, get_save_dir
+# sorry pep8 i cba to fix this in a pythonic way
 
 def _import(name, *args, **kwargs):
     if name == "ujson" and is_web:
