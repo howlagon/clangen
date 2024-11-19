@@ -3,9 +3,9 @@ import builtins
 import os
 import platform
 import shutil
-import sys
 
-is_web: bool = sys.platform.lower() == 'emscripten'
+from scripts.housekeeping.version import is_web
+from scripts.housekeeping.datadir import get_data_dir, get_save_dir
 
 def _import(name, *args, **kwargs):
     if name == "ujson" and is_web:
@@ -28,6 +28,7 @@ builtins.print = _print
 builtin_import = builtins.__import__
 builtins.__import__ = _import
 
+# fixes for statistics not being available on web
 def mean(data):
     """Return the sample arithmetic mean of data."""
     n = len(data)
@@ -86,9 +87,6 @@ def evalWindow(code):
     if not is_web:
         return
     platform.window.eval(code)
-
-from scripts.housekeeping.datadir import get_data_dir, get_save_dir
-# sorry pep8 i cba to fix this in a pythonic way
 
 async def init_idbfs():
     """

@@ -37,7 +37,7 @@ import sys
 import threading
 import time
 import asyncio
-from scripts.web import is_web
+from scripts.housekeeping.version import is_web
 from importlib.util import find_spec
 
 finished_loading = False

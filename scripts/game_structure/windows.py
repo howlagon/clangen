@@ -50,7 +50,7 @@ from scripts.utility import (
     ui_scale_dimensions,
     ui_scale_offset,
 )
-from scripts.web import is_web
+from scripts.housekeeping.version import is_web
 
 if TYPE_CHECKING:
     from scripts.screens.Screens import Screens

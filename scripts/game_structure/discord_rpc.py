@@ -12,7 +12,7 @@ import threading
 from time import time
 
 from scripts.game_structure.game_essentials import game
-from scripts.web import is_web
+from scripts.housekeeping.version import is_web
 
 status_dict = {
     "start screen": "At the start screen",

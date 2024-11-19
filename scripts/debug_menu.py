@@ -14,7 +14,7 @@ from scripts.debug_commands.utils import set_debug_class
 from scripts.game_structure.game_essentials import game
 from scripts.game_structure.screen_settings import MANAGER
 from scripts.utility import get_text_box_theme
-from scripts.web import is_web
+from scripts.housekeeping.version import is_web
 from pygame_gui.core.utility import get_default_manager, set_default_manager
 
 

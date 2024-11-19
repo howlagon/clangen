@@ -14,7 +14,7 @@ from strenum import StrEnum
 from scripts.housekeeping.progress_bar_updater import UIUpdateProgressBar
 from scripts.housekeeping.version import get_version_info
 from scripts.utility import quit
-from scripts.web import is_web
+from scripts.housekeeping.version import is_web
 
 if not is_web:
     import requests

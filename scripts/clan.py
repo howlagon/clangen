@@ -29,7 +29,7 @@ from scripts.utility import (
     quit,
     clan_symbol_sprite,
 )  # pylint: disable=redefined-builtin
-from scripts.web import is_web
+from scripts.housekeeping.version import is_web
 if not is_web:
     from statistics import mean, median
 else:

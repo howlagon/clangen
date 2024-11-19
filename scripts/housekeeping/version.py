@@ -7,7 +7,7 @@ from importlib.util import find_spec
 
 from platformdirs import user_data_dir
 
-from scripts.web import is_web
+is_web: bool = sys.platform.lower() == 'emscripten'
 
 logger = logging.getLogger(__name__)
 

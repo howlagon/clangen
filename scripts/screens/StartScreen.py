@@ -31,7 +31,7 @@ from scripts.game_structure.game_essentials import (
 from scripts.game_structure.ui_elements import UIImageButton, UISurfaceImageButton
 from scripts.game_structure.windows import UpdateAvailablePopup, ChangelogPopup
 from scripts.utility import ui_scale, quit, ui_scale_dimensions
-from scripts.web import is_web
+from scripts.housekeeping.version import is_web
 from .Screens import Screens
 from ..game_structure.screen_settings import MANAGER
 from ..housekeeping.datadir import get_data_dir, get_cache_dir

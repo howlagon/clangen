@@ -6,7 +6,6 @@ import sys
 
 from util import getCommandOutput
 
-
 def main(version_number: str = None, release_channel: str = None, upstream: str = None,
          silent: bool = True):
     """
