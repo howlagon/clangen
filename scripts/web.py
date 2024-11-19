@@ -7,9 +7,6 @@ import sys
 
 is_web: bool = sys.platform.lower() == 'emscripten'
 
-from scripts.housekeeping.datadir import get_data_dir, get_save_dir
-# sorry pep8 i cba to fix this in a pythonic way
-
 def _import(name, *args, **kwargs):
     if name == "ujson" and is_web:
         name = "json"
@@ -89,6 +86,9 @@ def evalWindow(code):
     if not is_web:
         return
     platform.window.eval(code)
+
+from scripts.housekeeping.datadir import get_data_dir, get_save_dir
+# sorry pep8 i cba to fix this in a pythonic way
 
 async def init_idbfs():
     """
