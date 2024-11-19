@@ -37,6 +37,7 @@ import sys
 import threading
 import time
 import asyncio
+import scripts.web # pylint: disable=unused-import # overwrite import
 from scripts.housekeeping.version import is_web
 from importlib.util import find_spec
 
