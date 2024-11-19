@@ -376,7 +376,7 @@ async def main():
             game.all_screens[game.last_screen_forupdate].exit_screen()
             game.all_screens[game.current_screen].screen_switches()
             game.switch_screens = False
-        if not pygame.mixer.music.get_busy() and not music_manager.muted:
+        if not is_web and pygame.mixer.music.get_busy() and not music_manager.muted:
             music_manager.play_queued()
 
         debugmode.update1(clock)
