@@ -4,6 +4,7 @@ import builtins
 import os
 import platform
 import shutil
+import sys
 
 from scripts.housekeeping.version import is_web
 from scripts.housekeeping.datadir import get_data_dir, get_save_dir
@@ -75,7 +76,7 @@ class window:
 
 def push_db():
     if not is_web: return
-    platform.window.FS.syncfc(False, platform.window.console.log)
+    platform.window.FS.syncfs(False, platform.window.console.log)
 
 def pull_db():
     if not is_web: return
@@ -222,3 +223,9 @@ def closeGracefully():
     if not is_web:
         return
     platform.window.closeGracefully()
+
+def excepthook(*args):
+    if not is_web:
+        return
+    error(str(args))
+    sys.__excepthook__(*args)

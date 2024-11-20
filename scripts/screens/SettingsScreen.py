@@ -31,6 +31,7 @@ from ..ui.get_arrow import get_arrow
 logger = logging.getLogger(__name__)
 with open("resources/gamesettings.json", "r", encoding="utf-8") as f:
     settings_dict = ujson.load(f)
+    if is_web: settings_dict['general'].pop('discord')
 
 
 class SettingsScreen(Screens):

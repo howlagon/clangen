@@ -118,7 +118,6 @@ class Sprites:
             print(f"lineart.png is not 3x7, falling back to {self.size}")
             print(f"if you are a modder, please update scripts/cat/sprites.py and "
                   f"do a search for 'if width / 3 == height / 7:'")
-        print(f"{self.size=}") # DEBUG DELETE LATER!!!!!! HOWL IF YOU FORGET TO DO THIS I WILL BE SO VERY MAD
 
         del width, height  # unneeded
 

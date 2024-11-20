@@ -9,6 +9,7 @@ import ujson
 from scripts.event_class import Single_Event
 from scripts.game_structure.screen_settings import toggle_fullscreen
 from scripts.housekeeping.datadir import get_save_dir, get_temp_dir
+from scripts import web
 
 pygame.init()
 
@@ -268,6 +269,7 @@ class Game:
                 write_file.write(_data)
                 write_file.flush()
                 os.fsync(write_file.fileno())
+        web.push_db()
 
     def read_clans(self):
         """with open(get_save_dir() + '/clanlist.txt', 'r') as read_file:
@@ -343,6 +345,7 @@ class Game:
         else:
             if os.path.exists(get_save_dir() + "/currentclan.txt"):
                 os.remove(get_save_dir() + "/currentclan.txt")
+        web.push_db()
 
     def save_settings(self, currentscreen=None):
         """Save user settings for later use"""

@@ -26,6 +26,7 @@ from scripts.utility import (
     ui_scale_blit,
     get_current_season,
 )
+from scripts.housekeeping.version import is_web
 
 
 class Screens:
@@ -94,9 +95,11 @@ class Screens:
     def loading_screen_start_work(
         self, target: callable, thread_name: str = "work_thread", args: tuple = tuple()
     ) -> PropagatingThread:
-        """Creates and starts the work_thread.
-        Returns the started thread."""
-
+        """Creates and starts the work_thread. On web, this will just run the target function.
+        Returns the started thread, or None on web"""
+        if is_web:
+            target(*args)
+            return
         work_thread = PropagatingThread(
             target=self._work_target, args=(target, args), name=thread_name, daemon=True
         )
