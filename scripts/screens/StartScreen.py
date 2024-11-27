@@ -348,7 +348,7 @@ class StartScreen(Screens):
             logger.exception("Failed to check for update")
             has_checked_for_update = True
 
-        if game.settings["show_changelog"]:
+        if game.settings["show_changelog"] and not is_web:
             show_changelog = True
             lastCommit = "0000000000000000000000000000000000000000"
             if os.path.exists(f"{get_cache_dir()}/changelog_popup_shown"):

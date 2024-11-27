@@ -43,13 +43,6 @@ from importlib.util import find_spec
 
 finished_loading = False
 
-if is_web:
-    print("Loading IDBFS")
-    asyncio.run(web.init_idbfs())
-    web.migrate_localstorage()
-    web.freeMemory
-    sys.excepthook = web.excepthook
-
 if not getattr(sys, "frozen", False):
     requiredModules = [
         "pygame",
@@ -201,7 +194,7 @@ import pygame
 from scripts.screens.all_screens import AllScreens
 import scripts.game_structure.screen_settings
 
-if web.is_web:
+if is_web:
     web.notifyFinishLoading()
 
 # P Y G A M E
@@ -217,6 +210,7 @@ game.rpc.start_rpc.set()
 def load_data():
     global finished_loading
 
+    web.pull_db()
     # load in the spritesheets
     sprites.load_all()
 
@@ -289,9 +283,8 @@ def loading_animation(scale: float = 1):
 
         pygame.display.update()
 
-if is_web:
+if not is_web:
     load_data()
-else:
     loading_thread = threading.Thread(target=load_data)
     loading_thread.start()
 
@@ -303,11 +296,9 @@ else:
     del loading_thread
 del finished_loading
 del loading_animation
-del load_data
 
 pygame.mixer.pre_init(buffer=44100)
 pygame.mixer.init()
-AllScreens.start_screen.screen_switches()
 
 # dev screen info now lives in scripts/screens/screens_core
 
@@ -316,6 +307,13 @@ cursor = pygame.cursors.Cursor((9, 0), cursor_img)
 disabled_cursor = pygame.cursors.Cursor(pygame.SYSTEM_CURSOR_ARROW)
 
 async def main():
+    if is_web:
+        await web.init_idbfs()
+        web.migrate_localstorage()
+        web.freeMemory()
+        sys.excepthook = web.excepthook
+        load_data()
+    AllScreens.start_screen.screen_switches()
     while 1:
         time_delta = clock.tick(game.switches["fps"]) / 1000.0
         await asyncio.sleep(0)

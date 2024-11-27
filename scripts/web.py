@@ -99,7 +99,6 @@ async def init_idbfs():
     evalWindow("window.fs_loaded = false")
     with open("resources/idbfs.js", "r", encoding="utf-8") as f:
         evalWindow(f.read())
-
     evalWindow("""
     FS.mount(window.IDBFS, {'root': '.'}, '""" + get_data_dir() + """')
     FS.syncfs(true, (err) => {
@@ -152,6 +151,8 @@ def freeMemory():
         'scripts',
         'resources',
         'languages',
+        'cache',
+        'saves',
     ]
     if not is_web:
         return
