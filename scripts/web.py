@@ -103,7 +103,7 @@ async def init_idbfs():
     evalWindow("""
     FS.mount(window.IDBFS, {'root': '.'}, '""" + get_data_dir() + """')
     FS.syncfs(true, (err) => {
-        if (err) {console.log(err)}
+        if (err) {console.error(err)}
         else {
             console.log('IndexedDB mounted and synced!')
             window.fs_loaded = true
@@ -111,7 +111,7 @@ async def init_idbfs():
     })
 
     window.onbeforeunload = async ()=>{
-        FS.syncfs(false, (err) => {console.log(err)})
+        FS.syncfs(false, (err) => {console.error(err)})
     }
     """)
 

@@ -1,7 +1,7 @@
 import os
 import platform
 
-from scripts.housekeeping.version import get_version_info
+from scripts.housekeeping.version import get_version_info, is_web
 
 
 def setup_data_dir():
@@ -26,6 +26,9 @@ def setup_data_dir():
 
 
 def get_data_dir():
+    if is_web:
+        return '/saves'
+    
     if get_version_info().is_source_build:
         return "."
 
