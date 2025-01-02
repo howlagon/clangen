@@ -21,7 +21,7 @@ from .RoleScreen import RoleScreen
 from .Screens import Screens
 from .SettingsScreen import SettingsScreen
 from .SpriteInspectScreen import SpriteInspectScreen
-from .StartScreen import StartScreen
+from scripts.screens.StartScreen import StartScreen
 from .SwitchClanScreen import SwitchClanScreen
 from .WarriorDenScreen import WarriorDenScreen
 

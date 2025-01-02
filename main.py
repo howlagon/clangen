@@ -61,6 +61,8 @@ if not getattr(sys, "frozen", False):
     del isMissing
 del find_spec
 
+import scripts.mod_loader
+
 from scripts.housekeeping.log_cleanup import prune_logs
 from scripts.housekeeping.stream_duplexer import UnbufferedStreamDuplexer
 from scripts.housekeeping.datadir import get_log_dir, setup_data_dir
