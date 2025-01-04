@@ -49,7 +49,7 @@ def load_mods():
             file_key = file.replace(f'{mod_key}.', '') # e.g. scripts.screens.StartScreen
 
         if modified_files.get(file_key) is not None:
-            if not mods[modified_files[file_key]].priority > mod_class.priority:
+            if mods[modified_files[file_key]].priority > mod_class.priority:
                 print(f"Mod {mod_path} is trying to modify the same file as {modified_files[file_key]}! Skipping loading mod...")
                 continue
             print(f"Mod {mod_path} is overriding {modified_files[file_key]}")
