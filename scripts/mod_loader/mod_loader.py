@@ -6,20 +6,37 @@ import os
 from .mod import Mod, mod_from_config
 
 mods: dict[str, Mod] = {}
-modified_files: dict[str, str] = {}
+modified_files: dict[str, list[str]] = {}
 
 old_import = builtins.__import__
+
+def handle_mod_import(name, *args, **kwargs):
+    # handles importing a script from a mod
+    # if the import is coming from the base script, import the mod with highest priority
+    # otherwise, import the mod with the next highest priority after the mod that the import is coming from
+    # dont ask how i got to this idea or got the code to work. its kinda black magic to me
+    if name not in modified_files:
+        return old_import(name, *args, **kwargs)
+    if mods[modified_files[name][-1]].mod_key in args[0]["__name__"]:
+        return old_import(name, *args, **kwargs)
+    
+    mods_sorted = sorted([mods[mod] for mod in modified_files[name] if mods[mod].enabled], key=lambda mod: mod.priority, reverse=True)
+    for mod in mods_sorted:
+        if mod.mod_key in args[0]["__name__"]:
+            name = mods_sorted[mods_sorted.index(mod) + 1].modified_scripts[name]
+            break
+    return old_import(name, *args, **kwargs)
+
 def new_import(name, *args, **kwargs):
-    try:
-        if 'mods.' in args[0]['__name__']:
-            return old_import(name, *args, **kwargs)
-    except IndexError:
-        pass
-    if (name not in modified_files) or (not mods[modified_files[name]].enabled):
+    if len(args) == 0:
+        return old_import(name, *args, **kwargs)
+    if 'mods.' in args[0]['__name__']:
+        return handle_mod_import(name, *args, **kwargs)
+    if (name not in modified_files) or (not mods[modified_files[name][0]].enabled):
         return old_import(name, *args, **kwargs)
 
-    print(f"Importing {name} from {modified_files[name]}")
-    return old_import(mods[modified_files[name]].modified_scripts[name], *args, **kwargs)
+    print(f"Importing {name} from {modified_files[name][0]}")
+    return old_import(mods[modified_files[name][0]].modified_scripts[name], *args, **kwargs)
 
 builtins.__import__ = new_import
 
@@ -42,6 +59,7 @@ def load_mods():
                 continue
         
         mod_class = mod_from_config(config)
+        mods[config['name']] = mod_class
 
         mod_key = mod_path.replace('/', '.').replace('\\', '.') # e.g. mods.howl_test_mod
         for file in glob.glob(f"{mod_path}/scripts/**/*.py", recursive=True):
@@ -49,12 +67,17 @@ def load_mods():
             file_key = file.replace(f'{mod_key}.', '') # e.g. scripts.screens.StartScreen
 
         if modified_files.get(file_key) is not None:
-            if mods[modified_files[file_key]].priority > mod_class.priority:
-                print(f"Mod {mod_path} is trying to modify the same file as {modified_files[file_key]}! Skipping loading mod...")
-                continue
-            print(f"Mod {mod_path} is overriding {modified_files[file_key]}")
-        modified_files[file_key] = config['name']
-        mods[config['name']] = mod_class
+            for index, mod_name in enumerate(modified_files[file_key]):
+                if mods[mod_name].priority < mod_class.priority:
+                    modified_files[file_key].insert(index, mod_class.name)
+                    break
+            else:
+                modified_files[file_key].append(mod_class.name)
+        else:
+            modified_files[file_key] = [mod_class.name]
+        
+        mod_class.mod_key = mod_key
+
 
 load_mods()
 print('Loaded mods:', ''.join([f"\n  - {mod.name} v{mod.version} by {mod.author}" for mod in mods.values()]))

@@ -3,19 +3,23 @@ class Mod:
                  name: str,
                  version: str,
                  author: str,
+                 mod_key: str = None,
                  description: str = None,
                  dependencies: list = None,
                  source_url: str = None,
-                 last_updated: int = None,
+                 hash_url: str = None,
+                 commit_hash: str = None,
                  priority: int = 0
                 ) -> None:
         self.name = name
         self.version = version
         self.author = author
+        self.mod_key = mod_key
         self.description = description
         self.dependencies = dependencies
         self.source_url = source_url
-        self.last_updated = last_updated
+        self.hash_url = hash_url
+        self.commit_hash = commit_hash
         self.enabled = True
         self.priority = priority
 
@@ -42,5 +46,7 @@ def mod_from_config(config: dict) -> Mod:
         description=config.get('description'),
         dependencies=config.get('dependencies'),
         source_url=config.get('sourceUrl'),
-        last_updated=config.get('lastUpdated')
+        hash_url=config.get('hashUrl'),
+        commit_hash=config.get('commitHash'),
+        priority=config.get('priority', 0)
     )
