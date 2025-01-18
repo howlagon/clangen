@@ -43,7 +43,7 @@ def _extend_json_from_memory(old_path: str, new_json: bytes) -> io.StringIO:
         raise ValueError("Both files must be of the same type (list or dict).")
     return io.StringIO(ujson.dumps(extended_json))
 
-class _FileHandler:
+class FileHandler:
     enabled = True
     lookup_table = {}
     memory = {}
@@ -99,6 +99,8 @@ class _FileHandler:
         if not cls.enabled: 
             return file
         file = file.replace("\\", "/")
+        if file in cls.memory.keys():
+            return cls.memory[file]["file"]
         if file in cls.lookup_table.keys():
             return cls.lookup_table[file]["file"]
         return file
@@ -123,7 +125,7 @@ class _FileHandler:
 
 def get_path(file: str) -> str:
     """Gets the path of a file, replacing it with the modded version if it exists."""
-    return _FileHandler.get_path(file)
+    return FileHandler.get_path(file)
 
 def image_load(file: str) -> pygame.Surface:
     """Replacement for pygame.image.load that will replace files if a mod has changed them.
@@ -134,8 +136,8 @@ def image_load(file: str) -> pygame.Surface:
     Returns:
         pygame.Surface
     """
-    if file in _FileHandler.memory.keys():
-        return pygame.image.load(_FileHandler._load_file_from_memory(file))
-    return pygame.image.load(_FileHandler.get_path(file))
+    if file in FileHandler.memory.keys():
+        return pygame.image.load(FileHandler._load_file_from_memory(file))
+    return pygame.image.load(FileHandler.get_path(file))
 
-builtins.open = _FileHandler.load_file
+builtins.open = FileHandler.load_file

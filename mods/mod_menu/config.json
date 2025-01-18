@@ -3,5 +3,6 @@
     "description": "example mod loader for testing :] ",
     "author": "howlagon",
     "version": "0.0.1",
-    "priority": 999
+    "priority": 999,
+    "toggleable": false
 }

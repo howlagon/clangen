@@ -3,7 +3,10 @@ import glob
 import ujson
 import os
 
+from scripts.housekeeping.datadir import get_save_dir
+
 from .mod import Mod, mod_from_config
+from .file_loader import FileHandler
 
 mods: dict[str, Mod] = {}
 modified_files: dict[str, list[str]] = {}
@@ -21,6 +24,8 @@ def handle_mod_import(name, *args, **kwargs):
         return old_import(name, *args, **kwargs)
     
     mods_sorted = sorted([mods[mod] for mod in modified_files[name] if mods[mod].enabled], key=lambda mod: mod.priority, reverse=True)
+    if len(mods_sorted) == 1:
+        return old_import(name, *args, **kwargs)
     for mod in mods_sorted:
         if mod.mod_key in args[0]["__name__"]:
             name = mods_sorted[mods_sorted.index(mod) + 1].modified_scripts[name]
@@ -66,18 +71,48 @@ def load_mods():
             file = mod_class.add_modified_script(mod_key, file)
             file_key = file.replace(f'{mod_key}.', '') # e.g. scripts.screens.StartScreen
 
-        if modified_files.get(file_key) is not None:
-            for index, mod_name in enumerate(modified_files[file_key]):
-                if mods[mod_name].priority < mod_class.priority:
-                    modified_files[file_key].insert(index, mod_class.name)
-                    break
+            if modified_files.get(file_key) is not None:
+                for index, mod_name in enumerate(modified_files[file_key]):
+                    if mods[mod_name].priority < mod_class.priority:
+                        modified_files[file_key].insert(index, mod_class.name)
+                        break
+                else:
+                    modified_files[file_key].append(mod_class.name)
             else:
-                modified_files[file_key].append(mod_class.name)
-        else:
-            modified_files[file_key] = [mod_class.name]
+                modified_files[file_key] = [mod_class.name]
         
+        mod_path = mod_path.replace("\\", "/")
+        for file in glob.glob(f"{mod_path}/resources/**/*", recursive=True):
+            if os.path.isdir(file):
+                continue
+            file = file.replace("\\", "/")
+            mod_class.add_modified_file(file.replace(f"{mod_path}/resources", "resources"), file)
+            FileHandler.change_binding_in_memory(file.replace(f"{mod_path}/resources", "resources"), file, mod_class.name)
+
         mod_class.mod_key = mod_key
 
+def build_mod_settings():
+    if not os.path.exists(f"{get_save_dir()}/mod_settings.json"):
+        with open(f"{get_save_dir()}/mod_settings.json", 'w') as fp:
+            ujson.dump({mod.name: mod.enabled for mod in mods.values()}, fp, indent=4)
+
+def toggle(mod_name) -> None:
+    mods[mod_name].enabled = not mods[mod_name].enabled
+    with open(f"{get_save_dir()}/mod_settings.json", 'r') as fp:
+        settings = ujson.load(fp)
+        settings[mod_name] = not settings[mod_name]
+    with open(f"{get_save_dir()}/mod_settings.json", 'w') as fp:
+        ujson.dump(settings, fp, indent=4)
+
+def check_enabled_mods() -> None:
+    with open(f"{get_save_dir()}/mod_settings.json", 'r') as fp:
+        settings = ujson.load(fp)
+    
+    for mod in mods.values():
+        mod.enabled = settings[mod.name]
 
 load_mods()
+build_mod_settings()
+check_enabled_mods()
+builtins.open = FileHandler.load_file
 print('Loaded mods:', ''.join([f"\n  - {mod.name} v{mod.version} by {mod.author}" for mod in mods.values()]))

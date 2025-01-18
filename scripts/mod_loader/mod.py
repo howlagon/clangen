@@ -9,7 +9,8 @@ class Mod:
                  source_url: str = None,
                  hash_url: str = None,
                  commit_hash: str = None,
-                 priority: int = 0
+                 priority: int = 0,
+                 toggleable: bool = True
                 ) -> None:
         self.name = name
         self.version = version
@@ -22,7 +23,9 @@ class Mod:
         self.commit_hash = commit_hash
         self.enabled = True
         self.priority = priority
+        self.toggleable = toggleable
 
+        self.modified_files = {}
         self.modified_scripts = {}
     
     def add_modified_script(self, mod_key: str, file: str) -> str:
@@ -32,6 +35,9 @@ class Mod:
         self.modified_scripts[file.replace(f'{mod_key}.', '')] = file
         return file
     
+    def add_modified_file(self, old_path, new_path):
+        self.modified_files[old_path] = new_path
+
     def disable(self) -> None:
         self.enabled = False
     
@@ -48,5 +54,6 @@ def mod_from_config(config: dict) -> Mod:
         source_url=config.get('sourceUrl'),
         hash_url=config.get('hashUrl'),
         commit_hash=config.get('commitHash'),
-        priority=config.get('priority', 0)
+        priority=config.get('priority', 0),
+        toggleable=config.get('toggleable', True)
     )
