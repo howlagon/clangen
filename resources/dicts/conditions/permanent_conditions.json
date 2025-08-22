@@ -1,7 +1,7 @@
 {
     "crooked jaw": {
         "severity": "major",
-        "congenital": "never",
+        "congenital": "sometimes",
         "moons_until": 0,
         "mortality": {
             "newborn": 0,
@@ -16,7 +16,11 @@
         ],
         "risks": [
         ],
-        "herbs": []
+        "herbs": {
+            "1": [],
+            "2": [],
+            "3": []
+        }
     },
     "lost a leg": {
         "severity": "major",
@@ -47,12 +51,17 @@
                 "chance": 20
             }
         ],
-        "herbs": [
+        "herbs": {
+            "1": [
             "daisy",
             "juniper",
             "marigold",
-            "ragwort"
-        ]
+            "ragwort",
+            "poppy"
+        ],
+            "2": [],
+            "3": []
+        }
     },
     "born without a leg": {
         "severity": "major",
@@ -79,12 +88,16 @@
                 "chance": 40
             }
         ],
-        "herbs": [
+        "herbs": {
+            "1": [
             "daisy",
             "juniper",
             "marigold",
             "ragwort"
-        ]
+        ],
+            "2": [],
+            "3": []
+        }
     },
     "weak leg": {
         "severity": "minor",
@@ -111,12 +124,17 @@
                 "chance": 40
             }
         ],
-        "herbs": [
+        "herbs": {
+            "1": [
             "daisy",
             "juniper",
             "marigold",
-            "ragwort"
-        ]
+            "ragwort",
+            "poppy"
+        ],
+            "2": [],
+            "3": []
+        }
     },
     "twisted leg": {
         "severity": "major",
@@ -143,12 +161,17 @@
                 "chance": 40
             }
         ],
-        "herbs": [
+        "herbs": {
+            "1": [
             "daisy",
             "juniper",
             "marigold",
-            "ragwort"
-        ]
+            "ragwort",
+            "poppy"
+        ],
+            "2": [],
+            "3": []
+        }
     },
     "lost their tail": {
         "severity": "minor",
@@ -175,10 +198,15 @@
                 "chance": 10
             }
         ],
-        "herbs": [
+        "herbs": {
+            "1": [
             "juniper",
-            "ragwort"
-        ]
+            "ragwort",
+            "poppy"
+        ],
+            "2": [],
+            "3": []
+        }
     },
     "born without a tail": {
         "severity": "minor",
@@ -197,7 +225,11 @@
         ],
         "risks": [
         ],
-        "herbs": []
+        "herbs": {
+            "1": [],
+            "2": [],
+            "3": []
+        }
     },
     "paralyzed": {
         "severity": "severe",
@@ -232,12 +264,17 @@
                 "chance": 20
             }
         ],
-        "herbs": [
+        "herbs": {
+            "1": [
             "daisy",
             "juniper",
             "ragwort",
-            "marigold"
-        ]
+            "marigold",
+            "poppy"
+        ],
+            "2": [],
+            "3": []
+        }
     },
     "raspy lungs": {
         "severity": "minor",
@@ -260,10 +297,14 @@
                 "chance": 20
             }
         ],
-        "herbs": [
+        "herbs": {
+            "1": [
             "betony",
             "mullein"
-        ]
+        ],
+            "2": [],
+            "3": []
+        }
     },
     "wasting disease": {
         "severity": "major",
@@ -310,10 +351,66 @@
                 "chance": 60
             }
         ],
-        "herbs": [
+        "herbs": {
+            "1": [
             "juniper",
             "ragwort"
-        ]
+        ],
+            "2": [],
+            "3": []
+        }
+    },
+    "strange lump": {
+        "severity": "major",
+        "congenital": "sometimes",
+        "moons_until": 40,
+        "mortality": {
+            "newborn": 0,
+            "kitten": 10,
+            "adolescent": 15,
+            "young adult": 35,
+            "adult": 55,
+            "senior adult": 65,
+            "senior": 75
+        },
+        "illness_infectiousness": [
+
+            {
+                "name": "whitecough",
+                "chance": 10
+            },
+            {
+                "name": "greencough",
+                "chance": 15
+            },
+            {
+                "name": "yellowcough",
+                "chance": 13
+            }
+        ],
+        "risks": [
+            {
+                "name": "seizure",
+                "chance": 30
+            },
+            {
+                "name": "paralyzed",
+                "chance": 60
+            },
+            {
+                "name": "redcough",
+                "chance": 50
+            }
+        ],
+        "herbs": {
+            "1": [
+            "juniper",
+            "ragwort",
+            "poppy"
+        ],
+            "2": [],
+            "3": []
+        }
     },
     "blind": {
         "severity": "major",
@@ -332,7 +429,41 @@
         ],
         "risks": [
         ],
-        "herbs": []
+        "herbs": {
+            "1": [],
+            "2": [],
+            "3": []
+        }
+    },
+    "absent": {
+        "severity": "severe",
+        "congenital": "sometimes",
+        "moons_until": 95,
+        "mortality": {
+            "newborn": 0,
+            "kitten": 0,
+            "adolescent": 0,
+            "young adult": 0,
+            "adult": 0,
+            "senior adult": 0,
+            "senior": 0
+        },
+        "illness_infectiousness": [],
+        "risks": [
+            {
+                "name": "joint pain",
+                "chance": 30
+            },
+            {
+                "name": "torn pelt",
+                "chance": 40
+            }
+        ],
+        "herbs": {
+            "1": [],
+            "2": [],
+            "3": []
+        }
     },
     "one bad eye": {
         "severity": "major",
@@ -354,7 +485,11 @@
                 "chance": 80
             }
         ],
-        "herbs": []
+        "herbs": {
+            "1": [],
+            "2": [],
+            "3": []
+        }
     },
     "failing eyesight": {
         "severity": "major",
@@ -377,7 +512,11 @@
                 "chance": 50
             }
         ],
-        "herbs": []
+        "herbs": {
+            "1": [],
+            "2": [],
+            "3": []
+        }
     },
     "partial hearing loss": {
         "severity": "minor",
@@ -400,7 +539,11 @@
                 "chance": 80
             }
         ],
-        "herbs": []
+        "herbs": {
+            "1": [],
+            "2": [],
+            "3": []
+        }
     },
     "deaf": {
         "severity": "major",
@@ -419,7 +562,11 @@
         ],
         "risks": [
         ],
-        "herbs": []
+        "herbs": {
+            "1": [],
+            "2": [],
+            "3": []
+        }
 
     },
     "constant joint pain": {
@@ -443,12 +590,16 @@
                 "chance": 10
             }
         ],
-        "herbs": [
+        "herbs": {
+            "1": [
             "daisy",
             "juniper",
             "marigold",
             "ragwort"
-        ]
+        ],
+            "2": [],
+            "3": []
+        }
     },
     "seizure prone": {
         "severity": "major",
@@ -471,10 +622,14 @@
                 "chance": 10
             }
         ],
-        "herbs": [
+        "herbs": {
+            "1": [
             "ragwort",
             "juniper"
-        ]
+        ],
+            "2": [],
+            "3": []
+        }
     },
     "allergies": {
         "severity": "minor",
@@ -497,7 +652,11 @@
                 "chance": 20
             }
         ],
-        "herbs": []
+        "herbs": {
+            "1": [],
+            "2": [],
+            "3": []
+        }
     },
     "constantly dizzy": {
         "severity": "major",
@@ -520,7 +679,11 @@
                 "chance": 20
             }
         ],
-        "herbs": []
+        "herbs": {
+            "1": [],
+            "2": [],
+            "3": []
+        }
     },
     "recurring shock": {
         "severity": "major",
@@ -543,11 +706,15 @@
                 "chance": 20
             }
         ],
-        "herbs": [
+        "herbs": {
+            "1": [
             "thyme",
             "juniper",
             "poppy"
-        ]
+        ],
+            "2": [],
+            "3": []
+        }
     },
     "lasting grief": {
         "severity": "minor",
@@ -568,13 +735,20 @@
             {
                 "name": "grief stricken",
                 "chance": 50
+            },
+            {
+                "name": "absent",
+                "chance": 50
             }
         ],
-        "herbs": [
+        "herbs": {
+            "1": [
             "thyme",
-            "juniper",
-            "poppy"
-        ]
+            "juniper"
+        ],
+            "2": [],
+            "3": []
+        }
     },
     "persistent headaches": {
         "severity": "major",
@@ -601,9 +775,13 @@
                 "chance": 20
             }
         ],
-        "herbs": [
+        "herbs": {
+            "1": [
             "poppy",
             "juniper"
-        ]
+        ],
+            "2": [],
+            "3": []
+        }
     }
 }

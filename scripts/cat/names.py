@@ -2,12 +2,14 @@
 Module that handles the name generation for all cats.
 """
 
+import contextlib
 import os
 import random
 
 import ujson
 
-from scripts.game_structure.game_essentials import game
+from scripts.game_structure import constants
+from scripts.cat.enums import CatRank, CatGroup
 from scripts.housekeeping.datadir import get_save_dir
 
 
@@ -22,7 +24,7 @@ class Name:
 
         if os.path.exists(get_save_dir() + "/prefixlist.txt"):
             with open(
-                str(get_save_dir() + "/prefixlist.txt", "r"), encoding="utf-8"
+                str(get_save_dir() + "/prefixlist.txt"), "r", encoding="utf-8"
             ) as read_file:
                 name_list = read_file.read()
                 if_names = len(name_list)
@@ -38,7 +40,7 @@ class Name:
 
         if os.path.exists(get_save_dir() + "/suffixlist.txt"):
             with open(
-                str(get_save_dir() + "/suffixlist.txt", "r"), encoding="utf-8"
+                str(get_save_dir() + "/suffixlist.txt"), "r", encoding="utf-8"
             ) as read_file:
                 name_list = read_file.read()
                 if_names = len(name_list)
@@ -70,49 +72,57 @@ class Name:
 
     def __init__(
         self,
-        status="warrior",
         prefix=None,
         suffix=None,
-        colour=None,
-        eyes=None,
-        pelt=None,
-        tortiepattern=None,
         biome=None,
         specsuffix_hidden=False,
         load_existing_name=False,
+        cat=None,
     ):
-        self.status = status
         self.prefix = prefix
         self.suffix = suffix
         self.specsuffix_hidden = specsuffix_hidden
 
+        self.cat = cat
+
+        try:
+            color = cat.pelt.colour
+            eyes = cat.pelt.eye_colour
+            pelt = cat.pelt.name
+            tortie_pattern = cat.pelt.tortie_pattern
+        except AttributeError:
+            color = None
+            eyes = None
+            pelt = None
+            tortie_pattern = None
+
         name_fixpref = False
         # Set prefix
         if prefix is None:
-            self.give_prefix(eyes, colour, biome)
+            self.give_prefix(eyes, color, biome)
             # needed for random dice when we're changing the Prefix
             name_fixpref = True
 
         # Set suffix
         if self.suffix is None:
-            self.give_suffix(pelt, biome, tortiepattern)
+            self.give_suffix(pelt, biome, tortie_pattern)
             if name_fixpref and self.prefix is None:
                 # needed for random dice when we're changing the Prefix
                 name_fixpref = False
 
         if self.suffix and not load_existing_name:
             # Prevent triple letter names from joining prefix and suffix from occurring (ex. Beeeye)
-            triple_letter = False
             possible_three_letter = (
                 self.prefix[-2:] + self.suffix[0],
                 self.prefix[-1] + self.suffix[:2],
             )
-            if all(
+            triple_letter = all(
                 i == possible_three_letter[0][0] for i in possible_three_letter[0]
             ) or all(
-                i == possible_three_letter[1][0] for i in possible_three_letter[1]
-            ):
-                triple_letter = True
+                i == possible_three_letter[1][0]
+                for i in possible_three_letter[1]
+                # Prevent double animal names (ex. Spiderfalcon)
+            )
             double_animal = (
                 self.prefix in self.names_dict["animal_prefixes"]
                 and self.suffix in self.names_dict["animal_suffixes"]
@@ -136,12 +146,11 @@ class Name:
                     and str(self.suffix) != ""
                 )
             ):
-
                 # check if random die was for prefix
                 if name_fixpref:
-                    self.give_prefix(eyes, colour, biome)
+                    self.give_prefix(eyes, color, biome)
                 else:
-                    self.give_suffix(pelt, biome, tortiepattern)
+                    self.give_suffix(pelt, biome, tortie_pattern)
 
                 nono_name = self.prefix + self.suffix
                 possible_three_letter = (
@@ -149,11 +158,9 @@ class Name:
                     self.prefix[-1] + self.suffix[:2],
                 )
                 if any(
-                    i != possible_three_letter[0][0]
-                    for i in possible_three_letter[0]
+                    i != possible_three_letter[0][0] for i in possible_three_letter[0]
                 ) and any(
-                    i != possible_three_letter[1][0]
-                    for i in possible_three_letter[1]
+                    i != possible_three_letter[1][0] for i in possible_three_letter[1]
                 ):
                     triple_letter = False
                 if (
@@ -163,11 +170,14 @@ class Name:
                     double_animal = False
                 i += 1
 
+    def __str__(self):
+        return self.__repr__()
+
     # Generate possible prefix
     def give_prefix(self, eyes, colour, biome):
         """Generate possible prefix."""
-        # decided in game config: cat_name_controls
-        if game.config["cat_name_controls"]["always_name_after_appearance"]:
+        # decided in constants.CONFIG: cat_name_controls
+        if constants.CONFIG["cat_name_controls"]["always_name_after_appearance"]:
             named_after_appearance = True
         else:
             named_after_appearance = not random.getrandbits(
@@ -178,11 +188,11 @@ class Name:
 
         # Add possible prefix categories to list.
         possible_prefix_categories = []
-        if game.config["cat_name_controls"][
-            "allow_eye_names"
-        ]:  # game config: cat_name_controls
-            if eyes in self.names_dict["eye_prefixes"]:
-                possible_prefix_categories.append(self.names_dict["eye_prefixes"][eyes])
+        if (
+            eyes in self.names_dict["eye_prefixes"]
+            and constants.CONFIG["cat_name_controls"]["allow_eye_names"]
+        ):
+            possible_prefix_categories.append(self.names_dict["eye_prefixes"][eyes])
         if colour in self.names_dict["colour_prefixes"]:
             possible_prefix_categories.append(
                 self.names_dict["colour_prefixes"][colour]
@@ -195,10 +205,9 @@ class Name:
             named_after_appearance
             and possible_prefix_categories
             and not named_after_biome_
+            or named_after_biome_
+            and possible_prefix_categories
         ):
-            prefix_category = random.choice(possible_prefix_categories)
-            self.prefix = random.choice(prefix_category)
-        elif named_after_biome_ and possible_prefix_categories:
             prefix_category = random.choice(possible_prefix_categories)
             self.prefix = random.choice(prefix_category)
         else:
@@ -206,7 +215,7 @@ class Name:
 
         # This thing prevents any prefix duplications from happening.
         # Try statement stops this form running when initializing.
-        try:
+        with contextlib.suppress(NameError):
             if self.prefix in names.prefix_history:
                 # do this recursively until a name that isn't on the history list.
                 self.give_prefix(eyes, colour, biome)
@@ -219,11 +228,9 @@ class Name:
             if len(names.prefix_history) > 8:
                 # removing at zero so the oldest gets removed
                 names.prefix_history.pop(0)
-        except NameError:
-            pass
 
     # Generate possible suffix
-    def give_suffix(self, pelt, biome, tortiepattern):
+    def give_suffix(self, pelt, biome, tortie_pattern):
         """Generate possible suffix."""
         if pelt is None or pelt == "SingleColour":
             self.suffix = random.choice(self.names_dict["normal_suffixes"])
@@ -233,11 +240,11 @@ class Name:
             # Pelt name only gets used if there's an associated suffix.
             if named_after_pelt:
                 if (
-                    pelt in ["Tortie", "Calico"]
-                    and tortiepattern in self.names_dict["tortie_pelt_suffixes"]
+                    pelt in ("Tortie", "Calico")
+                    and tortie_pattern in self.names_dict["tortie_pelt_suffixes"]
                 ):
                     self.suffix = random.choice(
-                        self.names_dict["tortie_pelt_suffixes"][tortiepattern]
+                        self.names_dict["tortie_pelt_suffixes"][tortie_pattern]
                     )
                 elif pelt in self.names_dict["pelt_suffixes"]:
                     self.suffix = random.choice(self.names_dict["pelt_suffixes"][pelt])
@@ -256,13 +263,26 @@ class Name:
     def __repr__(self):
         # Handles predefined suffixes (such as newborns being kit),
         # then suffixes based on ages (fixes #2004, just trust me)
+
+        # Handles suffix assignment with outside cats
+        if self.cat.status.is_former_clancat:
+            old_rank = self.cat.status.find_prior_clan_rank()
+
+            if (
+                old_rank in self.names_dict["special_suffixes"]
+                and not self.specsuffix_hidden
+            ):
+                return self.prefix + self.names_dict["special_suffixes"][old_rank]
+
         if (
-            self.status in self.names_dict["special_suffixes"]
+            self.cat.status.rank in self.names_dict["special_suffixes"]
             and not self.specsuffix_hidden
         ):
-            return self.prefix + self.names_dict["special_suffixes"][self.status]
-        if game.config["fun"]["april_fools"]:
-            return self.prefix + "egg"
+            return (
+                self.prefix + self.names_dict["special_suffixes"][self.cat.status.rank]
+            )
+        if constants.CONFIG["fun"]["april_fools"]:
+            return f"{self.prefix}egg"
         return self.prefix + self.suffix
 
 
